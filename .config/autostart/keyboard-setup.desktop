@@ -1,0 +1,8 @@
+
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Version=1.0
+Name=Keyboard Setup
+Exec=kb-us-ru.sh
+X-GNOME-Autostart-enabled=true
