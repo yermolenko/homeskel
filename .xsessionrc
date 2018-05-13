@@ -1,0 +1,8 @@
+#xrandr --dpi 117x121
+#killall xscreensaver
+#ssh-agent
+PATH="$PATH":~/bin:~/apps/scripts
+export PATH
+#avfs.run
+emacs-server.sh
+export EDITOR=editor.sh
