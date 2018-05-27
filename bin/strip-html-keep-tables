@@ -1,0 +1,66 @@
+#!/usr/bin/env php
+<?php
+
+$html=file_get_contents("php://stdin");
+
+$html =
+   preg_replace('/<style([^>]*)>([^<]*)<\/style>/i', '', $html);
+
+$html = strip_tags($html, '\
+<table><table/>\
+<tbody><tbody/>\
+<th><th/>\
+<tr><tr/>\
+<td><td/>\
+<p><p/>\
+<b><b/>\
+<i><i/>\
+<strong><strong/>\
+<em><em/>\
+');
+
+$html =
+   preg_replace_callback(
+      '#(<td[^>]*>)(.+?)(</td>)#is',
+      function($m)
+      {
+        return(
+           $m[1].
+           strip_tags
+           (
+              $m[2],
+              '<strong><strong/><em><em/><b><b/><i><i/><img><img/>'
+           )
+           .$m[3]);
+      },
+      $html);
+
+$html =
+   preg_replace('/<td([^>]*)>[\ \n]*<\/td>/i', "<td$1>&nbsp;</td>",
+   preg_replace('/<p([^>]*)>[\ \n]*<\/p>/i', "<p$1>&nbsp;</p>",
+   preg_replace('/\ \n/i', "\n",
+   preg_replace('/[\ ]+/i', ' ',
+   preg_replace('/\n<\//i', "</",
+   preg_replace('/(<[^>]+)/i', "\n$1",
+   preg_replace('/\t/i', ' ',
+   preg_replace('/\n/i', ' ',
+   preg_replace('/\<b\>/i', '<strong>',
+   preg_replace('/\<\/b\>/i', '</strong>',
+   preg_replace('/\<i\>/i', '<em>',
+   preg_replace('/\<\/i\>/i', '</em>',
+   preg_replace('/(<[^>]+) lang=".*?"/i', '$1',
+   preg_replace('/(<[^>]+) align=".*?"/i', '$1',
+   preg_replace('/(<[^>]+) width=".*?"/i', '$1',
+   preg_replace('/(<[^>]+) height=".*?"/i', '$1',
+   preg_replace('/(<[^>]+) valign=".*?"/i', '$1',
+   preg_replace('/(<[^>]+) valign=bottom/i', '$1',
+   preg_replace('/(<[^>]+) halign=".*?"/i', '$1',
+   preg_replace('/(<[^>]+) class=".*?"/i', '$1',
+   preg_replace('/(<[^>]+) sdval=".*?"/i', '$1',
+   preg_replace('/(<[^>]+) sdnum=".*?"/i', '$1',
+   preg_replace('/(<[^>]+) bgcolor=".*?"/i', '$1',
+   preg_replace('/(<[^>]+) style=".*?"/i', '$1', $html))))))))))))))))))))))));
+
+fwrite(STDOUT, $html);
+
+?>
