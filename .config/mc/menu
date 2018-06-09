@@ -475,18 +475,18 @@ _       Commands w/o shortcuts:
 
 _       Rsync (Current Dir -> Other Dir)
         echo "%d -> %D"
-        rsync -avxiu --numeric-ids %d/ %D/ || whiptail --title "Error" --msgbox "ERROR: %d -> %D" 25 80
+        rsync -aHAXvxiu --numeric-ids %d/ %D/ || whiptail --title "Error" --msgbox "ERROR: %d -> %D" 25 80
 
 + ! t t
 _       Rsync (Current Item -> Other Dir)
-        rsync -avxiu --numeric-ids %d/%f %D/ || whiptail --title "Error" --msgbox "ERROR: %d/%f -> %D/" 25 80
+        rsync -aHAXvxiu --numeric-ids %d/%f %D/ || whiptail --title "Error" --msgbox "ERROR: %d/%f -> %D/" 25 80
 
 + t t
 _       Rsync (Current Selection -> Other Dir)
         set %t;
 	while [ -n "$1" ]; do
           echo "$1 -> %D/"
-          rsync -avxiu --numeric-ids "$1" %D/ || whiptail --title "Error" --msgbox "ERROR: $1 -> %D/" 25 80
+          rsync -aHAXvxiu --numeric-ids "$1" %D/ || whiptail --title "Error" --msgbox "ERROR: $1 -> %D/" 25 80
 	  shift
 	done
 
