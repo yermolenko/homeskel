@@ -98,6 +98,12 @@
 ;; -------------------
 
 (setq edit-server-new-frame nil)
+;; (eval-after-load 'edit-server
+;;   '(define-key edit-server-edit-mode-map (kbd "C-c C-c") nil))
+(add-hook 'edit-server-edit-mode-hook
+          (lambda ()
+            (define-key edit-server-edit-mode-map (kbd "C-c C-c") nil)
+            ))
 (edit-server-start)
 
 ;; -------------------
