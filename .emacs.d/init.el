@@ -104,6 +104,15 @@
           (lambda ()
             (define-key edit-server-edit-mode-map (kbd "C-c C-c") nil)
             ))
+;; (setq edit-server-url-major-mode-alist
+;;       '(("github\\.com" . markdown-mode)))
+(add-hook 'edit-server-start-hook
+          (lambda ()
+            (when (string-match "github.com" (buffer-name))
+              (markdown-mode))
+            (when (string-match-p (regexp-quote "edu.ua") (buffer-name))
+              (html-mode))
+            ))
 (edit-server-start)
 
 ;; -------------------
