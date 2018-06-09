@@ -490,6 +490,24 @@ _       Rsync (Current Selection -> Other Dir)
 	  shift
 	done
 
+_       Copy directory structure (Current Dir -> Other Dir)
+        echo "%d -> %D"
+        rsync -avxi -f"+ */" -f"- *" --numeric-ids %d/ %D/ || whiptail --title "Error" --msgbox "ERROR: %d -> %D" 25 80
+#       rsync -avxi --include='*/' --exclude='*' %d/ %D/ || whiptail --title "Error" --msgbox "ERROR: %d -> %D" 25 80
+
++ ! t t
+_       Copy directory structure (Current Item -> Other Dir)
+        rsync -avxi -f"+ */" -f"- *" --numeric-ids %d/%f %D/ || whiptail --title "Error" --msgbox "ERROR: %d/%f -> %D/" 25 80
+
++ t t
+_       Copy directory structure (Current Selection -> Other Dir)
+        set %t;
+	while [ -n "$1" ]; do
+          echo "$1 -> %D/"
+          rsync -avxi -f"+ */" -f"- *" --numeric-ids "$1" %D/ || whiptail --title "Error" --msgbox "ERROR: $1 -> %D/" 25 80
+	  shift
+	done
+
 #        if [ "%d" = "%D" ]; then
 #          echo "The two directores must be different"
 #          exit 1
