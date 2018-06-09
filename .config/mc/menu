@@ -470,16 +470,19 @@ g       Git repos diff
 q       Dired current directory
         editor.sh %d
 
-Rsync   (Current Dir -> Other Dir)
+_       Commands w/o shortcuts:
+        whiptail --title "Info" --msgbox "Simple command without a shortcut" 25 80
+
+_       Rsync (Current Dir -> Other Dir)
         echo "%d -> %D"
         rsync -avxiu --numeric-ids %d/ %D/ || whiptail --title "Error" --msgbox "ERROR: %d -> %D" 25 80
 
 + ! t t
-Rsync   (Current Item -> Other Dir)
+_       Rsync (Current Item -> Other Dir)
         rsync -avxiu --numeric-ids %d/%f %D/ || whiptail --title "Error" --msgbox "ERROR: %d/%f -> %D/" 25 80
 
 + t t
-Rsync   (Current Selection -> Other Dir)
+_       Rsync (Current Selection -> Other Dir)
         set %t;
 	while [ -n "$1" ]; do
           echo "$1 -> %D/"
