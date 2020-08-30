@@ -339,7 +339,15 @@ This works on the current region."
   "Normalize string"
   (shell-command-to-string
    (concat "echo -n \'"
-           (yaa-replace-in-string " " "_" (yaa-replace-in-string "'" "" str))
+           (yaa-replace-in-string
+            " " "_"
+            (yaa-replace-in-string
+             "'" ""
+             (with-temp-buffer
+               (insert str)
+               (yaa-translit-ukrainian-region
+                (point-min) (point-max))
+               (buffer-string))))
            "\' | konwert utf8-ascii")))
 
 ;; (yaa-normalize-string "abc АБВ.doc")
