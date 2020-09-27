@@ -1,0 +1,8 @@
+source ../zz-template/host-config || exit 1
+
+extra_sshfs_options+=(-o ro)
+
+# Local Variables:
+# mode: shell-script
+# sh-shell: bash
+# End:

@@ -1,0 +1,45 @@
+host=198.51.100.1
+user=user
+ssh_port=22
+
+#ssh_password=usekeysandneverstorepasswordshere
+#ssh_password_file=./you_should_not_store_passwords_in_a_file
+
+#extra_ssh_options+=(-o ConnectTimeout=15)
+#extra_ssh_options+=(-C)
+#extra_ssh_options+=(-o UserKnownHostsFile=./known_hosts)
+#extra_ssh_options+=(-i ./privkey)
+#extra_ssh_options+=(-o FingerprintHash=md5)
+#extra_ssh_options+=(-vvv)
+#extra_ssh_options+=(-o PubkeyAuthentication=no)
+#extra_ssh_options+=(-J user@jumphost:22)
+#extra_ssh_options+=(-o ProxyCommand='nc -X connect -x '$PROXY_HOST:$PROXY_PORT' %h %p')
+#extra_ssh_options+=(-o ProxyCommand='corkscrew '$PROXY_HOST' '$PROXY_PORT' %h %p')
+#extra_ssh_options+=(-o ProxyCommand='corkscrew '$PROXY_HOST' '$PROXY_PORT' %h %p ./.proxy_auth')
+
+sshfs_remote_root="/"
+#sshfs_remote_root="/storage/emulated/0"
+
+#do_not_pass_extra_ssh_options_to_sshfs=1
+
+#extra_sshfs_options+=(-o ro)
+#extra_sshfs_options+=(-C)
+#extra_sshfs_options+=(-o Cipher=arcfour)
+#extra_sshfs_options+=(-o uid=1000,gid=1000,umask=022)
+#extra_sshfs_options+=(-o ssh_command='ssh -J user@jumphost:22')
+
+#local_port_forwarding_pairs+=(18384:8384)
+#local_port_forwarding_pairs+=(13306:3306)
+
+#remote_port_forwarding_pairs+=(5900:8000)
+
+remote_x11_server_displays=(:0)
+vnc_remote_port_start=5900
+vnc_local_port_start=25900
+
+socks_proxy_local_port=7050
+
+# Local Variables:
+# mode: shell-script
+# sh-shell: bash
+# End:
