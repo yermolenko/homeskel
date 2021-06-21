@@ -2,7 +2,7 @@
 #
 #  yaa-ssh-tricks - various ssh-based tricks
 #
-#  Copyright (C) 2010, 2013, 2019, 2020 Alexander Yermolenko
+#  Copyright (C) 2010, 2013, 2019, 2020, 2021 Alexander Yermolenko
 #  <yaa.mbox@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -437,6 +437,17 @@ vnc_run_ssvncviewer()
     vnc_local_port=${1:-$vnc_local_port_start}
     echo "Connecting to 127.0.0.1:$vnc_local_port"
     ssvncviewer -16bpp 127.0.0.1:$vnc_local_port
+}
+
+vnc_run_ssvncviewer_viewonly()
+{
+    require_var vnc_local_port_start
+
+    require ssvncviewer
+
+    vnc_local_port=${1:-$vnc_local_port_start}
+    echo "Connecting to 127.0.0.1:$vnc_local_port"
+    ssvncviewer -16bpp -viewonly 127.0.0.1:$vnc_local_port
 }
 
 # echo "yaa-ssh-tricks is a library"
