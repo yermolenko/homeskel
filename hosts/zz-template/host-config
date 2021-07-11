@@ -12,6 +12,7 @@ ssh_port=22
 #extra_ssh_options+=(-o FingerprintHash=md5)
 #extra_ssh_options+=(-vvv)
 #extra_ssh_options+=(-o PubkeyAuthentication=no)
+#extra_ssh_options+=(-o ProxyJump=user@jumphost:22)
 #extra_ssh_options+=(-J user@jumphost:22)
 #extra_ssh_options+=(-o ProxyCommand='nc -X connect -x '$PROXY_HOST:$PROXY_PORT' %h %p')
 #extra_ssh_options+=(-o ProxyCommand='corkscrew '$PROXY_HOST' '$PROXY_PORT' %h %p')
