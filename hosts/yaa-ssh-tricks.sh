@@ -240,7 +240,7 @@ local_port_forwarding_setup()
 
         echo "Preparing port forwarding: local $local_port -> remote $remote_port ..."
 
-        socket_file_name="$tempdir/.ssh-$host-local-port-forwarding-$remote_port-$local_port"
+        socket_file_name="$tempdir/.ssh-$host-lpf-$remote_port-$local_port"
 
         ssh -S "$socket_file_name" -M \
             -C -N -f -p $ssh_port \
@@ -299,7 +299,7 @@ remote_port_forwarding_setup()
 
         echo "Preparing port forwarding: remote $remote_port -> local $local_port ..."
 
-        socket_file_name="$tempdir/.ssh-$host-remote-port-forwarding-$remote_port-$local_port"
+        socket_file_name="$tempdir/.ssh-$host-rpf-$remote_port-$local_port"
 
         ssh -S "$socket_file_name" -M \
             -C -N -f -p $ssh_port \
