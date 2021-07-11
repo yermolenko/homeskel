@@ -410,7 +410,7 @@ vnc_setup()
         cd /tmp; \
         nohup killall x11vnc > /dev/null 2>&1; \
         sleep 3; \
-        nohup x11vnc -display $x11_server_display -localhost -rfbport $vnc_remote_port -quiet -many > /dev/null 2>&1 &\
+        nohup x11vnc -display $x11_server_display -localhost -rfbport $vnc_remote_port -quiet -many -noxdamage > /dev/null 2>&1 &\
         '"
 
         vnc_remote_port=$(( $vnc_remote_port + 1 ))
