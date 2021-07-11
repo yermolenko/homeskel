@@ -118,6 +118,17 @@ ssh_copy_id()
     ssh-copy-id -p $ssh_port "${extra_ssh_options[@]}" "$user@$host"
 }
 
+sftp_interactive()
+{
+    require_var host
+    require_var user
+    require_var ssh_port
+
+    require sftp
+
+    sftp "${extra_ssh_options[@]}" -P $ssh_port "$user@$host"
+}
+
 sshfs_mount()
 {
     require_var host
