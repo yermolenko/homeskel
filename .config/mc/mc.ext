@@ -108,6 +108,9 @@
 #
 # Reorganization: 2012-03-07 Slava Zanko <slavazanko@gmail.com>
 
+regex/\.eml$
+	Open=(thunderbird %f)
+
 regex/\.plt$
 	Open=(gnuplot %f)
 #	View=(gnuplot %f &)
