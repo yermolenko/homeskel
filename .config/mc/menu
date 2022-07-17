@@ -466,6 +466,32 @@ _       Rsync (Current Selection -> Other Dir)
 	  shift
 	done
 
+_       Throttled rsync (Current Dir -> Other Dir)
+        echo "%d -> %D"
+        echo -n "Transfer speed in KBPS (e.g. 1000): "
+        read speed_limit
+        echo "Setting speed limit: $speed_limit"
+        rsync -aHAXvxiu --numeric-ids --bwlimit="$speed_limit" %d/ %D/ || whiptail --title "Error" --msgbox "ERROR: %d -> %D" 25 80
+
++ ! t t
+_       Throttled rsync (Current Item -> Other Dir)
+        echo -n "Transfer speed in KBPS (e.g. 1000): "
+        read speed_limit
+        echo "Setting speed limit: $speed_limit"
+        rsync -aHAXvxiu --numeric-ids --bwlimit="$speed_limit" --progress %d/%f %D/ || whiptail --title "Error" --msgbox "ERROR: %d/%f -> %D/" 25 80
+
++ t t
+_       Throttled rsync  (Current Selection -> Other Dir)
+        set %t;
+        echo -n "Transfer speed in KBPS (e.g. 1000): "
+        read speed_limit
+        echo "Setting speed limit: $speed_limit"
+	while [ -n "$1" ]; do
+          echo "$1 -> %D/"
+          rsync -aHAXvxiu --numeric-ids --bwlimit="$speed_limit" --progress "$1" %D/ || whiptail --title "Error" --msgbox "ERROR: $1 -> %D/" 25 80
+	  shift
+	done
+
 _       Copy directory structure (Current Dir -> Other Dir)
         echo "%d -> %D"
         rsync -avxi -f"+ */" -f"- *" --numeric-ids %d/ %D/ || whiptail --title "Error" --msgbox "ERROR: %d -> %D" 25 80
