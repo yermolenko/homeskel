@@ -2,7 +2,7 @@
 #
 #  yaa-ssh-tricks - various ssh-based tricks
 #
-#  Copyright (C) 2010, 2013, 2019, 2020, 2021 Alexander Yermolenko
+#  Copyright (C) 2010, 2013, 2019, 2020, 2021, 2022 Alexander Yermolenko
 #  <yaa.mbox@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -240,7 +240,7 @@ local_port_forwarding_setup()
 
         echo "Preparing port forwarding: local $local_port -> remote $remote_port ..."
 
-        socket_file_name="$tempdir/.ssh-$host-lpf-$remote_port-$local_port"
+        socket_file_name="$tempdir/.ssh-${host:${#host}<15?0:-15}-lpf-$remote_port-$local_port"
 
         ssh -S "$socket_file_name" -M \
             -C -N -f -p $ssh_port \
@@ -299,7 +299,7 @@ remote_port_forwarding_setup()
 
         echo "Preparing port forwarding: remote $remote_port -> local $local_port ..."
 
-        socket_file_name="$tempdir/.ssh-$host-rpf-$remote_port-$local_port"
+        socket_file_name="$tempdir/.ssh-${host:${#host}<15?0:-15}-rpf-$remote_port-$local_port"
 
         ssh -S "$socket_file_name" -M \
             -C -N -f -p $ssh_port \
@@ -363,7 +363,7 @@ socks_proxy_setup()
 
     tempdir=$( mktemp -d )
 
-    socket_file_name="$tempdir/.ssh-$host-socks-proxy-$socks_proxy_local_port"
+    socket_file_name="$tempdir/.ssh-${host:${#host}<15?0:-15}-socks-proxy-$socks_proxy_local_port"
 
     ssh -S "$socket_file_name" -M \
         -C -N -f -p $ssh_port \
