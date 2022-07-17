@@ -607,7 +607,9 @@ shell/.sdw
 # StarOffice 6 and OpenOffice.org formats
 regex/i/\.(odt|ott|sxw|stw|ods|ots|sxc|stc|odp|otp|sxi|sti|odg|otg|sxd|std|odb|odf|sxm|odm|sxg)$
 	Open=/usr/lib/mc/ext.d/doc.sh open ooffice
-	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view odt
+	View=%view{ascii} view-doc-as-text.sh %f
+#	View=(view-doc-in-editor.sh %f &)
+#	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view odt
 #	Open=(libreoffice %f &)
 #	View=%view{ascii} odt2txt %f
 
@@ -622,12 +624,16 @@ shell/i/.gnumeric
 # Microsoft Word Document
 regex/i/\.(do[ct]|wri)$
 	Open=/usr/lib/mc/ext.d/doc.sh open msdoc
-	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view msdoc
+	View=%view{ascii} view-doc-as-text.sh %f
+#	View=(view-doc-in-editor.sh %f &)
+#	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view msdoc
 #	Open=(lowriter %f >/dev/null 2>&1 &)
 #	View=%view{ascii} antiword -t %f || catdoc -w %f || word2x -f text %f - || strings %f
 type/^Microsoft\ Word
 	Open=/usr/lib/mc/ext.d/doc.sh open msdoc
-	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view msdoc
+	View=%view{ascii} view-doc-as-text.sh %f
+#	View=(view-doc-in-editor.sh %f &)
+#	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view msdoc
 #	Open=(lowriter %f >/dev/null 2>&1 &)
 #	View=%view{ascii} antiword -t %f || catdoc -w %f || word2x -f text %f - || strings %f
 
