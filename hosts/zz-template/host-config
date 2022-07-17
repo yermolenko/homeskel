@@ -10,6 +10,7 @@ ssh_port=22
 #extra_ssh_options+=(-o UserKnownHostsFile=./known_hosts)
 #extra_ssh_options+=(-i ./privkey)
 #extra_ssh_options+=(-o FingerprintHash=md5)
+#extra_ssh_options+=(-o PubkeyAcceptedKeyTypes=+ssh-rsa)
 #extra_ssh_options+=(-vvv)
 #extra_ssh_options+=(-o PubkeyAuthentication=no)
 #extra_ssh_options+=(-o ProxyJump=user@jumphost:22)
