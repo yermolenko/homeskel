@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-#  kb-us-ru.sh - setup keyboard for English/Russian using setxkbmap
+#  kb-us-ua-unicode-caps-toggle.sh - setup keyboard for
+#  English/Ukrainian using setxkbmap
 #
-#  Copyright (C) 2013, 2017, 2022 Alexander Yermolenko
-#  <yaa.mbox@gmail.com>
+#  Copyright (C) 2013, 2017 Alexander Yermolenko <yaa.mbox@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -44,8 +44,8 @@ setxkbmap \
     -option ''
 sleep 2
 setxkbmap \
-    -layout "us,ru" \
-    -variant "," \
-    -option "grp:shifts_toggle,ctrl:nocaps,compose:menu,lv3:rwin_switch"
+    -layout "us,ua" \
+    -variant ",unicode" \
+    -option "grp:caps_toggle,compose:menu,lv3:rwin_switch"
 
 kb-spc2ctrl.sh

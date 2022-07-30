@@ -3,7 +3,8 @@
 #  kb-us-ua-unicode.sh - setup keyboard for English/Ukrainian using
 #  setxkbmap
 #
-#  Copyright (C) 2013, 2017 Alexander Yermolenko <yaa.mbox@gmail.com>
+#  Copyright (C) 2013, 2017, 2022 Alexander Yermolenko
+#  <yaa.mbox@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -46,6 +47,6 @@ sleep 2
 setxkbmap \
     -layout "us,ua" \
     -variant ",unicode" \
-    -option "grp:caps_toggle,compose:menu,lv3:rwin_switch"
+    -option "grp:shifts_toggle,compose:menu,lv3:rwin_switch,ctrl:nocaps"
 
 kb-spc2ctrl.sh
