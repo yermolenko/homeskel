@@ -9,8 +9,6 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-(yaa-toggle-fullscreen)
-
 (if (eq window-system 'x)
     (progn
 ;;      (set-default-font "DejaVu Sans Mono-12")
@@ -418,3 +416,7 @@
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
+
+;; --------------------
+
+(yaa-toggle-fullscreen)
