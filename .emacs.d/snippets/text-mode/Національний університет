@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: Національний університет
+# key: ynuf
+# --
+Національн${1:$$(
+yas-choose-value '("ий" "ого" "ому" "им")
+)} університет${:$$(
+cond ((string= (yas-field-value 1) "ий") "")
+     ((string= (yas-field-value 1) "ого") "у")
+     ((string= (yas-field-value 1) "ому") "і")
+     ((string= (yas-field-value 1) "им") "ом")
+     (t "")
+)}$0

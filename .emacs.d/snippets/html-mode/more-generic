@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: more-generic
+# key: ymore
+# --
+<a href="/?q=node/" title="">Детальніше &gt;&gt;</a>

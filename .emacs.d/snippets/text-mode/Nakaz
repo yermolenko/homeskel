@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Nakaz
+# key: ynakazfn
+# --
+Nakaz_N${1:0}_vid_${2:00}.${3:00}.${4:22}$0

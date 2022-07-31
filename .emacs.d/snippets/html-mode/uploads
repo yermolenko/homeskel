@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: uploads
+# key: yuploads
+# --
+<a href="${1:/uploads/filename.pdf}" title="${1:$(
+let ((uploads-relative-filename
+      (car (last (split-string yas-text "/uploads/")))))
+       (file-name-nondirectory uploads-relative-filename)
+)} (${2:0} ${3:$$(
+yas-choose-value '("КБ" "МБ" "Б")
+)})">${1:$(
+file-name-base yas-text
+)} (${1:$(
+upcase (or (file-name-extension yas-text) "file")
+)}, $2 $3)</a>$0
