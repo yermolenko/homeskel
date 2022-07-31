@@ -265,6 +265,9 @@
 (add-to-list 'company-c-headers-path-system "/usr/include/c++/6/")
 (mapc (lambda (mode-hook) (add-hook mode-hook 'company-mode))
       '(c-mode-hook cc-mode-hook c++-mode-hook))
+;; (setq company-ispell-available t)
+;; (setq company-ispell-dictionary (file-truename "~/.emacs.d/ispell-dictionary.txt"))
+;; (add-to-list 'company-backends 'company-ispell)
 
 ;; -------------------
 
