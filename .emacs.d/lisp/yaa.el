@@ -383,7 +383,7 @@ This works on the current region."
       (call-process "/usr/bin/du" nil t nil "-sch" f)
       (progn
         (re-search-backward "\\(^[0-9.,]+\\)\\([A-Za-z]*\\).*total$")
-        (setq ret (concat (match-string 1) " " (match-string 2))))
+        (setq ret (concat (match-string 1) " " (match-string 2))))
       (setenv "LANG" env-lang-bak)
       ret)))
 
@@ -413,7 +413,7 @@ This works on the current region."
                 "target=\"_blank\" "
                 "title=\"" (file-name-nondirectory normalized-filename)
                 " (" filesize "Б)\""
-                ">" title " (" filetype ", " filesize "Б)</a>")))))
+                ">" title " (" filetype ", " filesize "Б)</a>")))))
 
 ;; (add-name-to-file original-filename normalized-filename t)
 
