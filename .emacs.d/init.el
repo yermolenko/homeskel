@@ -11,13 +11,13 @@
 
 (if (eq window-system 'x)
     (progn
-;;      (set-default-font "DejaVu Sans Mono-12")
+     (set-frame-font "DejaVu Sans Mono-14")
       (when (string-match-p (regexp-quote "edu.ua") system-name)
-        (set-default-font "DejaVu Sans Mono-14"))
+        (set-frame-font "DejaVu Sans Mono-14"))
       (when (string= system-name "yapc")
-        (set-default-font "DejaVu Sans Mono-16"))
+        (set-frame-font "DejaVu Sans Mono-16"))
       (when (string= system-name "yanb")
-        (set-default-font "DejaVu Sans Mono-14"))
+        (set-frame-font "DejaVu Sans Mono-14"))
       ))
 
 (tool-bar-mode -1)
