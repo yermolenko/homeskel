@@ -21,7 +21,21 @@
 
 ;; --------------------
 
-(defun yaa-open-in-external-app ()
+(defun yaa-which-command (command)
+  (locate-file command exec-path exec-suffixes 1))
+
+(defun yaa-choose-best-command-if (fn commands)
+  (cond ((car (remove-if-not fn commands)) (car (remove-if-not fn commands)))
+        (t (car (last commands)))))
+
+(defun yaa-choose-best-command (commands)
+  (yaa-choose-best-command-if 'yaa-which-command commands))
+
+;; (yaa-choose-best-command '("okularr" "evincze" "evincexx"))
+
+;; --------------------
+
+(defun yaa-dired-open-in-external-app ()
   "Open the current file or dired marked files in external app."
   (interactive)
   (let ( doIt
@@ -54,12 +68,10 @@
 
 ;; --------------------
 
-(defun yaa-open-current-dir-in-mc ()
-  "Open the current directory in mc"
-  (interactive)
-  (let ((curdir (file-name-directory (or load-file-name buffer-file-name))))
-    (message "%s" curdir)
-    (message "%s" (file-name-directory (or load-file-name buffer-file-name)))
+(defun yaa-open-dir-in-mc (f)
+  "Open directory in mc"
+  (message "%s" f)
+  (let ((curdir (expand-file-name (file-name-directory f))))
     (cond
      ((string-equal system-type "windows-nt")
       (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" curdir t t)))
@@ -69,6 +81,21 @@
       (let ((process-connection-type nil))
         (message "Starting MC in folder...")
         (start-process "" nil "mc-folder.sh" curdir))))))
+
+;; --------------------
+
+(defun yaa-open-current-dir-in-mc ()
+  "Open the current directory in mc"
+  (interactive)
+  (let ((curdir (file-name-directory (or load-file-name buffer-file-name))))
+    (yaa-open-dir-in-mc curdir)))
+
+;; --------------------
+
+(defun yaa-dired-open-dired-directory-in-mc ()
+  "Open the current directory in mc"
+  (interactive)
+    (yaa-open-dir-in-mc dired-directory))
 
 ;; -------------------
 
@@ -431,6 +458,40 @@ This works on the current region."
   (interactive)
   (let ((filename (expand-file-name (read-file-name "Enter file name:"))))
     (insert (yaahtml-autohref filename))))
+
+;; --------------------
+
+(defun yaa-view (f)
+  "View office file contents"
+  (with-temp-buffer
+    (let ((ret)
+          (env-lang-bak (getenv "LANG")))
+      ;; (setenv "LANG" "C")
+      ;; (with-output-to-temp-buffer "*yaa-view*"
+      ;;   (shell-command (concat "view-doc-as-text.sh" " " f)
+      ;;                  "*yaa-view*"
+      ;;                  nil)
+      ;;   (pop-to-buffer "*yaa-view*"))
+      (with-output-to-temp-buffer "*yaa-view*"
+        (call-process "view-doc-as-text.sh" nil "*yaa-view*" nil f)
+        (pop-to-buffer "*yaa-view*"))
+      ;; (setenv "LANG" env-lang-bak)
+      ret)))
+
+(defun yaa-dired-view ()
+  "Preview files from dired"
+  (interactive)
+  (let ((list-of-filenames (dired-get-marked-files nil current-prefix-arg)))
+    (mapcar 'kill-new (mapcar 'yaa-view list-of-filenames))
+    (dired-revert)))
+
+;; --------------------
+
+(defun yaa-kill-buffer-file-name ()
+  "Kill buffer-file-name"
+  (interactive)
+  (kill-new buffer-file-name)
+)
 
 ;; --------------------
 

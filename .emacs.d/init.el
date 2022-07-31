@@ -119,7 +119,6 @@
 
 (global-set-key (kbd "<f4>") 'speedbar)
 (global-set-key (kbd "C-<f4>") 'yaa-open-current-dir-in-mc)
-(global-set-key (kbd "C-S-<f4>") 'yaa-open-in-external-app)
 
 (global-set-key (kbd "<f5>")
 		(lambda () (interactive)
@@ -228,6 +227,21 @@
             (define-key dired-mode-map (kbd "C-c C-c h")
               'yaahtml-dired-autohref)))
 
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (define-key dired-mode-map (kbd "C-c C-c v")
+              'yaa-dired-view)))
+
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (define-key dired-mode-map (kbd "C-c C-c o")
+              'yaa-dired-open-in-external-app)))
+
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (define-key dired-mode-map (kbd "C-c C-c d")
+              'yaa-dired-open-dired-directory-in-mc)))
+
 (add-hook 'html-mode-hook
           (lambda ()
             (define-key html-mode-map (kbd "C-c C-c h")
@@ -308,11 +322,12 @@
 (require 'openwith)
 (openwith-mode t)
 (setq openwith-associations
-      '(
-        ("\\.pdf\\'" "okular" (file))
-        ("\\.djvu\\'" "okular" (file))
-        ("\\.\\(?:jp?g\\|png\\|gif\\)\\'" "gpicview" (file))
-        ("\\.mp3\\'" "smplayer" (file))
+      `(
+        ("\\.eml\\'" "thunderbird" (file))
+        ("\\.pdf\\'" ,(yaa-choose-best-command '("okular" "evince" "xpdf")) (file))
+        ("\\.djvu\\'" ,(yaa-choose-best-command '("okular" "evince")) (file))
+        ("\\.\\(?:jp?g\\|png\\|gif\\)\\'" ,(yaa-choose-best-command '("gpicview" "lximage-qt")) (file))
+        ("\\.mp3\\'" ,(yaa-choose-best-command '("smplayer" "vlc")) (file))
         ("\\.\\(?:mpe?g\\|avi\\|wmv\\)\\'" "mplayer" ("-idx" file))
         ))
 
