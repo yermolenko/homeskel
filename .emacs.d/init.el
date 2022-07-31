@@ -1,5 +1,7 @@
 ;; -*- coding: utf-8 -*-
 
+(when (file-directory-p "~/.emacs.d/lisp/icicles")
+  (add-to-list 'load-path "~/.emacs.d/lisp/icicles"))
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (load "yaa.el")
 ;; (load "yaa-staging.el")
