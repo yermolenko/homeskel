@@ -146,6 +146,8 @@
 
 (global-set-key (kbd "C-<f11>") 'yaa-toggle-maximize-buffer)
 
+(setq yaa-romanization-rules "ukrainian")
+;; (setq yaa-romanization-rules "russian")
 (global-set-key (kbd "<f12>") 'html-mode)
 
 (global-set-key (kbd "C-;") 'set-mark-command)

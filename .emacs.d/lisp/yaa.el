@@ -279,7 +279,84 @@ This works on the current region."
 
 ;; --------------------
 
-(defun yaa-translit-ukrainian-region (begin end)
+(defun yaa-romanize-region-as-russian (begin end)
+  (interactive "r")
+  (let ((case-fold-search nil))
+  (xah-replace-pairs-region
+   begin end
+   '(
+     ["Бе" "Bie"] ["Ве" "Vie"] ["Ге" "Gie"] ["Де" "Дie"]
+     ["Же" "Zhie"] ["Зе" "Zie"] ["Ке" "Kie"] ["Ле" "Lie"]
+     ["Ме" "Mie"] ["Не" "Nie"] ["Пе" "Pie"] ["Ре" "Rie"]
+     ["Се" "Sie"] ["Те" "Tie"] ["Фе" "Fie"] ["Хе" "Khie"]
+     ["Це" "Tsie"] ["Че" "Chie"] ["Ше" "Shie"] ["Ще" "Shchie"]
+
+     ["Бё" "Bio"] ["Вё" "Vio"] ["Гё" "Gio"] ["Дё" "Дio"]
+     ["Жё" "Zhio"] ["Зё" "Zio"] ["Кё" "Kio"] ["Лё" "Lio"]
+     ["Мё" "Mio"] ["Нё" "Nio"] ["Пё" "Pio"] ["Рё" "Rio"]
+     ["Сё" "Sio"] ["Тё" "Tio"] ["Фё" "Fio"] ["Хё" "Khio"]
+     ["Цё" "Tsio"] ["Чё" "Chio"] ["Шё" "Shio"] ["Щё" "Shchio"]
+
+     ["Бю" "Biu"] ["Вю" "Viu"] ["Гю" "Giu"] ["Дю" "Дiu"]
+     ["Жю" "Zhiu"] ["Зю" "Ziu"] ["Кю" "Kiu"] ["Лю" "Liu"]
+     ["Мю" "Miu"] ["Ню" "Niu"] ["Пю" "Piu"] ["Рю" "Riu"]
+     ["Сю" "Siu"] ["Тю" "Tiu"] ["Фю" "Fiu"] ["Хю" "Khiu"]
+     ["Цю" "Tsiu"] ["Чю" "Chiu"] ["Шю" "Shiu"] ["Щю" "Shchiu"]
+
+     ["Бя" "Bia"] ["Вя" "Via"] ["Гя" "Gia"] ["Дя" "Дia"]
+     ["Жя" "Zhia"] ["Зя" "Zia"] ["Кя" "Kia"] ["Ля" "Lia"]
+     ["Мя" "Mia"] ["Ня" "Nia"] ["Пя" "Pia"] ["Ря" "Ria"]
+     ["Ся" "Sia"] ["Тя" "Tia"] ["Фя" "Fia"] ["Хя" "Khia"]
+     ["Ця" "Tsia"] ["Чя" "Chia"] ["Шя" "Shia"] ["Щя" "Shchia"]
+
+     ["бе" "bie"] ["ве" "vie"] ["ге" "gie"] ["де" "дie"]
+     ["же" "zhie"] ["зе" "zie"] ["ке" "kie"] ["ле" "lie"]
+     ["ме" "mie"] ["не" "nie"] ["пе" "pie"] ["ре" "rie"]
+     ["се" "sie"] ["те" "tie"] ["фе" "fie"] ["хе" "khie"]
+     ["це" "tsie"] ["че" "chie"] ["ше" "shie"] ["ще" "shchie"]
+
+     ["бё" "bio"] ["вё" "vio"] ["гё" "gio"] ["дё" "дio"]
+     ["жё" "zhio"] ["зё" "zio"] ["кё" "kio"] ["лё" "lio"]
+     ["мё" "mio"] ["нё" "nio"] ["пё" "pio"] ["рё" "rio"]
+     ["сё" "sio"] ["тё" "tio"] ["фё" "fio"] ["хё" "khio"]
+     ["цё" "tsio"] ["чё" "chio"] ["шё" "shio"] ["щё" "shchio"]
+
+     ["бю" "biu"] ["вю" "viu"] ["гю" "giu"] ["дю" "дiu"]
+     ["жю" "zhiu"] ["зю" "ziu"] ["кю" "kiu"] ["лю" "liu"]
+     ["мю" "miu"] ["ню" "niu"] ["пю" "piu"] ["рю" "riu"]
+     ["сю" "siu"] ["тю" "tiu"] ["фю" "fiu"] ["хю" "khiu"]
+     ["цю" "tsiu"] ["чю" "chiu"] ["шю" "shiu"] ["щю" "shchiu"]
+
+     ["бя" "bia"] ["вя" "via"] ["гя" "gia"] ["дя" "дia"]
+     ["жя" "zhia"] ["зя" "zia"] ["кя" "kia"] ["ля" "lia"]
+     ["мя" "mia"] ["ня" "nia"] ["пя" "pia"] ["ря" "ria"]
+     ["ся" "sia"] ["тя" "tia"] ["фя" "fia"] ["хя" "khia"]
+     ["ця" "tsia"] ["чя" "chia"] ["шя" "shia"] ["щя" "shchia"]
+
+     ["а" "a"] ["б" "b"] ["в" "v"] ["г" "g"] ["д" "д"]
+     ["е" "ye"] ["ё" "yo"] ["ж" "zh"] ["з" "z"] ["и" "i"]
+     ["й" "y"] ["к" "k"] ["л" "l"] ["м" "m"] ["н" "n"]
+     ["о" "o"] ["п" "p"] ["р" "r"] ["с" "s"] ["т" "t"]
+     ["у" "u"] ["ф" "f"] ["х" "kh"] ["ц" "ts"] ["ч" "ch"]
+     ["ш" "sh"] ["щ" "shch"] ["ъ" ""] ["ы" "y"] ["ь" ""]
+     ["э" "e"] ["ю" "yu"] ["я" "ya"]
+
+     ["А" "A"] ["Б" "B"] ["В" "V"] ["Г" "G"] ["Д" "Д"]
+     ["Е" "Ye"] ["Ё" "Yo"] ["Ж" "Zh"] ["З" "Z"] ["И" "I"]
+     ["Й" "Y"] ["К" "K"] ["Л" "L"] ["М" "M"] ["Н" "N"]
+     ["О" "O"] ["П" "P"] ["Р" "R"] ["С" "S"] ["Т" "T"]
+     ["У" "U"] ["Ф" "F"] ["Х" "Kh"] ["Ц" "Ts"] ["Ч" "Ch"]
+     ["Ш" "Sh"] ["Щ" "Shch"] ["Ъ" ""] ["Ы" "y"] ["Ь" ""]
+     ["Э" "E"] ["Ю" "Yu"] ["Я" "Ya"]
+
+     ["ґ" "g"] ["є" "ye"] ["і" "i"] ["ї" "yi"]
+
+     ["Ґ" "G"] ["Є" "Ye"] ["І" "I"] ["Ї" "Yi"]
+     ))))
+
+;; --------------------
+
+(defun yaa-romanize-region-as-ukrainian (begin end)
   (interactive "r")
   (let ((case-fold-search nil))
   (xah-replace-pairs-region
@@ -342,7 +419,54 @@ This works on the current region."
      ["Р" "R"] ["С" "S"] ["Т" "T"] ["У" "U"] ["Ф" "F"]
      ["Х" "Kh"] ["Ц" "Ts"] ["Ч" "Ch"] ["Ш" "Sh"] ["Щ" "Shch"]
      ["Ь" ""] ["Ю" "Yu"] ["Я" "Ya"]
+
+     ["ё" "yo"] ["ъ" ""] ["ы" "y"] ["э" "e"]
+
+     ["Ё" "Yo"] ["Ъ" ""] ["Ы" "y"] ["Э" "E"]
      ))))
+
+;; --------------------
+
+(defun yaa-romanize-region-dummy (begin end)
+  (interactive "r")
+  (let ((case-fold-search nil))
+  (xah-replace-pairs-region
+   begin end
+   '(
+     ["а" "a"] ["б" "b"] ["в" "v"] ["г" "g"] ["д" "д"]
+     ["е" "ye"] ["ё" "yo"] ["ж" "zh"] ["з" "z"] ["и" "i"]
+     ["й" "y"] ["к" "k"] ["л" "l"] ["м" "m"] ["н" "n"]
+     ["о" "o"] ["п" "p"] ["р" "r"] ["с" "s"] ["т" "t"]
+     ["у" "u"] ["ф" "f"] ["х" "kh"] ["ц" "ts"] ["ч" "ch"]
+     ["ш" "sh"] ["щ" "shch"] ["ъ" ""] ["ы" "y"] ["ь" ""]
+     ["э" "e"] ["ю" "yu"] ["я" "ya"]
+
+     ["А" "A"] ["Б" "B"] ["В" "V"] ["Г" "G"] ["Д" "Д"]
+     ["Е" "Ye"] ["Ё" "Yo"] ["Ж" "Zh"] ["З" "Z"] ["И" "I"]
+     ["Й" "Y"] ["К" "K"] ["Л" "L"] ["М" "M"] ["Н" "N"]
+     ["О" "O"] ["П" "P"] ["Р" "R"] ["С" "S"] ["Т" "T"]
+     ["У" "U"] ["Ф" "F"] ["Х" "Kh"] ["Ц" "Ts"] ["Ч" "Ch"]
+     ["Ш" "Sh"] ["Щ" "Shch"] ["Ъ" ""] ["Ы" "y"] ["Ь" ""]
+     ["Э" "E"] ["Ю" "Yu"] ["Я" "Ya"]
+
+     ["ґ" "g"] ["є" "ye"] ["і" "i"] ["ї" "yi"]
+
+     ["Ґ" "G"] ["Є" "Ye"] ["І" "I"] ["Ї" "Yi"]
+     ))))
+
+;; --------------------
+
+(defun yaa-romanize-region (begin end &optional rules)
+  (interactive "r")
+  (let ((case-fold-search nil))
+    (let ((rules (or rules (completing-read
+                            "Romanization rules: "
+                            '(("russian" 1) ("ukrainian" 2) ("dummy" 3))))))
+      (cond ((string= rules "ukrainian") (yaa-romanize-region-as-ukrainian begin end))
+            ((string= rules "russian") (yaa-romanize-region-as-russian begin end))
+            (t (yaa-romanize-region-dummy begin end))))))
+
+;; (read-from-minibuffer "Romanization rules: ")
 
 ;; --------------------
 
@@ -362,6 +486,8 @@ This works on the current region."
   "Simple replace in string"
   (replace-regexp-in-string (regexp-quote what) with in nil 'literal))
 
+(defvar yaa-romanization-rules "russian")
+
 (defun yaa-normalize-string (str)
   "Normalize string"
   (shell-command-to-string
@@ -372,12 +498,14 @@ This works on the current region."
              "'" ""
              (with-temp-buffer
                (insert str)
-               (yaa-translit-ukrainian-region
-                (point-min) (point-max))
+               (yaa-romanize-region
+                (point-min) (point-max)
+                yaa-romanization-rules)
                (buffer-string))))
            "\' | konwert utf8-ascii")))
 
 ;; (yaa-normalize-string "abc АБВ.doc")
+;; (yaa-normalize-string "abc АБВє.doc")
 ;; (yaa-normalize-string "abc $PWD АБВ.doc")
 ;; (yaa-normalize-string "abc $PWD 'АБВ.doc")
 ;; (yaa-normalize-string "abc $PWD ''АБВ.doc")
