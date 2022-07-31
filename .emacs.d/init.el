@@ -6,6 +6,39 @@
 (load "yaa.el")
 ;; (load "yaa-staging.el")
 
+;; ------------------------------
+
+(customize-set-variable 'flyspell-auto-correct-binding (kbd "C-@"))
+;; default was [(control ?\;)]
+
+(global-set-key (kbd "C-;") 'set-mark-command)
+(global-set-key (kbd "C-M-;") 'mark-sexp)
+
+(global-set-key (kbd "C-c j") 'set-mark-command)
+(global-set-key (kbd "C-c J") 'mark-sexp)
+
+;; ------------------------------
+
+;; (keyboard-translate ?\C-h ?\C-?)  ; translate 'C-h' to DEL
+;; (keyboard-translate ?\C-? ?\C-h)  ; translate DEL to 'C-h'.
+
+;; map backspace [delete-backward-char] to C-h
+(define-key key-translation-map [?\C-?] [?\C-h])
+
+;; map M-backspace [backward-kill-word] to M-h
+(define-key key-translation-map [?\M-\d] [?\M-h])
+
+;; map C-h to backspace
+(define-key key-translation-map [?\C-h] [?\C-?])
+
+;; map M-h [mark-paragraph] to M-backspace
+(define-key key-translation-map [?\M-h] [?\M-\d])
+
+(global-set-key (kbd "C-c h") 'mark-paragraph)
+(global-set-key (kbd "C-?") 'help-command)
+
+;; ------------------------------
+
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
@@ -36,6 +69,7 @@
 
 (setq ispell-program-name "aspell")
 (setq ispell-dictionary "russian")
+(setq ispell-dictionary "ukrainian")
 ;;(setq ispell-dictionary "english")
 (when (string-match-p (regexp-quote "edu.ua") system-name)
   (setq ispell-dictionary "ukrainian"))
@@ -45,8 +79,6 @@
 (dolist (hook '(change-log-mode-hook log-edit-mode-hook))
   (add-hook hook (lambda () (flyspell-mode -1))))
 ;; (add-hook 'html-mode-hook 'flyspell-mode)
-(eval-after-load "flyspell"
-  '(define-key flyspell-mode-map (kbd "C-;") nil))
 
 ;; --------------------
 
@@ -117,19 +149,19 @@
 
 ;; -------------------
 
-(global-set-key (kbd "<f4>") 'speedbar)
-(global-set-key (kbd "C-<f4>") 'yaa-open-current-dir-in-mc)
+(global-set-key (kbd "C-c B") 'speedbar)
+(global-set-key (kbd "C-c M") 'yaa-open-current-dir-in-mc)
 
-(global-set-key (kbd "<f5>")
+(global-set-key (kbd "C-c i")
 		(lambda () (interactive)
 		  (toggle-input-method)))
 
-(setq yaa-keybind-switch-to-russian "C-<f5>")
-(setq yaa-keybind-switch-to-ukrainian "C-S-<f5>")
-(when (string-match-p (regexp-quote "edu.ua") system-name)
-  (progn
-    (setq yaa-keybind-switch-to-russian "C-S-<f5>")
-    (setq yaa-keybind-switch-to-ukrainian "C-<f5>")))
+(setq yaa-keybind-switch-to-russian "C-c R")
+(setq yaa-keybind-switch-to-ukrainian "C-c U")
+;; (when (string-match-p (regexp-quote "edu.ua") system-name)
+;;   (progn
+;;     (setq yaa-keybind-switch-to-russian "C-S-<f5>")
+;;     (setq yaa-keybind-switch-to-ukrainian "C-<f5>")))
 
 (global-set-key (kbd yaa-keybind-switch-to-russian)
 		(lambda () (interactive)
@@ -139,31 +171,21 @@
 		(lambda () (interactive)
 		  (set-input-method 'ukrainian-computer)))
 
-(global-set-key (kbd "<f8>") 'typopunct-mode)
-(global-set-key (kbd "C-<f8>") 'describe-char)
-
-(global-set-key (kbd "<f9>") 'compile)
-
-(global-set-key (kbd "C-<f11>") 'yaa-toggle-maximize-buffer)
+(set-input-method 'russian-computer)
+(set-input-method 'ukrainian-computer)
+(toggle-input-method)
 
 (setq yaa-romanization-rules "ukrainian")
 ;; (setq yaa-romanization-rules "russian")
-(global-set-key (kbd "<f12>") 'html-mode)
 
-(global-set-key (kbd "C-;") 'set-mark-command)
-(global-set-key (kbd "C-M-;") 'mark-sexp)
+(global-set-key (kbd "C-c P") 'typopunct-mode)
+(global-set-key (kbd "C-c D") 'describe-char)
 
-;; (global-set-key "\C-c\C-w" 'clipboard-kill-region)
-;; (global-set-key "\C-c\M-w" 'clipboard-kill-ring-save)
-;; (global-set-key "\C-c\C-y" 'clipboard-yank)
+(global-set-key (kbd "C-c C") 'compile)
 
-(keyboard-translate ?\C-h ?\C-?)
-;; (define-key key-translation-map [?\C-h] [?\C-?])
+(global-set-key (kbd "C-c F") 'yaa-toggle-maximize-buffer)
 
-(global-set-key (kbd "C-?") 'help-command)
-;; (global-set-key (kbd "M-?") 'mark-paragraph)
-;; (global-set-key (kbd "C-h") 'delete-backward-char)
-;; (global-set-key (kbd "M-h") 'backward-kill-word)
+(global-set-key (kbd "C-c H") 'html-mode)
 
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
@@ -246,7 +268,7 @@
 
 (add-hook 'html-mode-hook
           (lambda ()
-            (define-key html-mode-map (kbd "C-c C-c h")
+            (define-key html-mode-map (kbd "C-c C-c H")
               'yaahtml-wrap-autohref)
             (define-key html-mode-map (kbd "C-c C-c w")
               'yaahtml-wrap-with-tags)
