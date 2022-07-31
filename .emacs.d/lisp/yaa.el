@@ -502,7 +502,7 @@ This works on the current region."
 (defun yaahtml-node-ref (nodeid)
   "Insert drupal node ref."
   (interactive "sEnter drupal node number: ")
-  (insert "./?q=node/" nodeid))
+  (insert "/?q=node/" nodeid))
 
 ;; --------------------
 
@@ -529,12 +529,12 @@ This works on the current region."
 (defun yaahtml-native-link-by-node-number (node-number)
   "Insert native link by relative-href."
   (interactive "sEnter drupal node number: ")
-  (insert "<a title=\"\" href=\"./?q=node/" node-number "\"></a>" ""))
+  (insert "<a title=\"\" href=\"/?q=node/" node-number "\"></a>" ""))
 
 (defun yaahtml-employee-ref (nodeid)
   "Insert employee ref."
   (interactive "sEnter drupal node number: ")
-  (insert "<a href=\"" "./?q=node/" nodeid "\" title=\"Ім'я По батькові Прізвище\">Прізвище Ім'я По батькові</a>"))
+  (insert "<a href=\"" "/?q=node/" nodeid "\" title=\"Ім'я По батькові Прізвище\">Прізвище Ім'я По батькові</a>"))
 
 (defun yaahtml-wrap-employee-ref (nodeid)
   "Wrap employee with link."
@@ -554,14 +554,14 @@ This works on the current region."
       (goto-char p2)
       (insert "</a>")
       (goto-char p1)
-      (insert "<a href=\"" "./?q=node/" nodeid "\" title=\"" pib "\">")
+      (insert "<a href=\"" "/?q=node/" nodeid "\" title=\"" pib "\">")
       ;; (goto-char p2)
       )))
 
 (defun yaahtml-employee-regalia ()
   "Insert employee regalia."
   (interactive)
-  (insert "<a href=\"./?q=node/XXX\" title=\"Адміністрація університету\">проректор</a>, директор <a href=\"/institut-\" title=\"Інститут\">інституту</a>, декан <a href=\"/fakultet-\" title=\"Факультет\">факультету</a>, завідувач <a href=\"/kafedra-\" title=\"Кафедра\">кафедри</a>"))
+  (insert "<a href=\"/?q=node/XXX\" title=\"Адміністрація університету\">проректор</a>, директор <a href=\"/institut-\" title=\"Інститут\">інституту</a>, декан <a href=\"/fakultet-\" title=\"Факультет\">факультету</a>, завідувач <a href=\"/kafedra-\" title=\"Кафедра\">кафедри</a>"))
 
 (defun yaahtml-gallery (img-count)
   "Insert image gallery."
