@@ -3,7 +3,7 @@
 #  kb-us-altgr-intl.sh - setup keyboard for English (altgr-intl
 #  variant) using setxkbmap
 #
-#  Copyright (C) 2013, 2017, 2020 Alexander Yermolenko
+#  Copyright (C) 2013, 2017, 2020, 2022 Alexander Yermolenko
 #  <yaa.mbox@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -48,6 +48,6 @@ setxkbmap \
     -model pc105 \
     -layout us \
     -variant altgr-intl \
-    -option ''
+    -option 'ctrl:nocaps'
 
 kb-spc2ctrl.sh
