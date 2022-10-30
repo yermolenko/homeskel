@@ -769,6 +769,21 @@ This works on the current region."
 
 ;; --------------------
 
+(defun yaahtml-cleanup-whole-buffer-after-lowriter (&optional strip-lists)
+  "Cleanup HTML produced by LibreOffice."
+  (interactive
+   (list
+    (y-or-n-p "Strip HTML lists? ")))
+  (shell-command-on-region
+   (point-min) (point-max)
+   "strip-html-keep-tables-and-lists" t t)
+  (when strip-lists
+    (shell-command-on-region
+     (point-min) (point-max)
+     "strip-html-keep-tables" t t)))
+
+;; --------------------
+
 (defun yaref-cpp ()
   "Browse local cppreference"
   (interactive)
