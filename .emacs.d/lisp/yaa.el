@@ -256,7 +256,7 @@ This works on the current region."
 
 ;; --------------------
 
-(defun yaa-remove-extra-spaces (start end)
+(defun yaa-remove-extra-spaces-region (start end)
   "Collapse adjacent spaces"
   (interactive "r")
   (save-excursion
@@ -268,7 +268,7 @@ This works on the current region."
 
 ;; --------------------
 
-(defun yaa-fix-apostrophes (start end)
+(defun yaa-fix-apostrophes-region (start end)
   "Replace “’” to “'”"
   (interactive "r")
   (xah-replace-pairs-region
