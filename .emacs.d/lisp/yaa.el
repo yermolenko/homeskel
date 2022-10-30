@@ -782,6 +782,118 @@ This works on the current region."
      (point-min) (point-max)
      "strip-html-keep-tables" t t)))
 
+(defun yaahtml-prettify-tables-region (begin end)
+  "Make HTML tables look nicer."
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region begin end)
+      (let ((case-fold-search t))
+        (goto-char (point-min))
+        (while (re-search-forward "<\\(td\\|p\\)\\([^>]*\\)>[[:space:]]+" nil t)
+          (replace-match "<\\1\\2>"))
+        (goto-char (point-min))
+        (while (re-search-forward "[[:space:]]+</\\(td\\|p\\)>" nil t)
+          (replace-match "</\\1>"))
+        (goto-char (point-min))
+        (while (re-search-forward "[[:space:]]*</tr>" nil t)
+          (replace-match "\n</tr>"))
+        (goto-char (point-min))
+        (while (re-search-forward "[[:space:]]*</table>" nil t)
+          (replace-match "\n</table>"))
+        (goto-char (point-min))
+        (while (re-search-forward "<table\\(?: style=\"table-layout:fixed;\"\\)*\\([>[:space:]]+?\\)" nil t)
+          (replace-match "<table style=\"table-layout:fixed;\"\\1"))
+        (goto-char (point-min))
+        (while (re-search-forward "<td>\\(П.?І.?Б.?\\|пара\\|ПОНЕДІЛОК\\|ВІВТОРОК\\|СЕРЕДА\\|ЧЕТВЕР\\|П.?ЯТНИЦЯ\\|СУБОТА\\)</td>" nil t)
+          (replace-match "<th>\\1</th>"))
+        (goto-char (point-min))
+        (while (re-search-forward "<th>пара</th>" nil t)
+          (replace-match "<th style=\"width: 5%;\">Пара</th>"))
+        ))))
+
+(defun yaahtml-prettify-links-region (begin end)
+  "Make HTML links look nicer."
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region begin end)
+      (let ((case-fold-search t))
+        (goto-char (point-min))
+        (while (re-search-forward "\\([[:digit:]]+\\)[[:space:]]+\\([[:digit:]]+\\)[[:space:]]+\\([[:digit:]]+\\)" nil t)
+          (replace-match "\\1 \\2 \\3"))
+        (goto-char (point-min))
+        (while (re-search-forward "\\([^\"]\\{1,1\\}\\)\\(https?://[^<[:space:]]*\\)" nil t) ;; TODO: capture unquoted links only
+          (replace-match "\\1<a rel=\"noopener nofollow noreferrer\" target=\"_blank\" title=\"Перейти за посиланням\" href=\"\\2\">Посилання &gt;&gt;</a>"))
+        ))))
+
+(defun yaa-prettify-text-region (begin end)
+  "Make plain text look nicer."
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region begin end)
+      (yaa-remove-extra-spaces-region (point-min) (point-max))
+      (let ((case-fold-search t))
+        ;; apostrophes
+        (goto-char (point-min))
+        (while (re-search-forward "\\([[:alpha:]]\\{1,1\\}\\)[’ʼ]\\{1,1\\}\\([[:alpha:]]\\{1,1\\}\\)" nil t)
+          (replace-match "\\1'\\2"))
+        ;; № X
+        (goto-char (point-min))
+        (while (re-search-forward "\\([№]\\{1,1\\}\\)[[:blank:]]\\{1,2\\}\\([[:digit:]]\\{1,1\\}\\)" nil t)
+          (replace-match "\\1 \\2"))
+        ;; partial institution abbreviations
+        (goto-char (point-min))
+        (while (re-search-forward "\\(^\\|[[:blank:]]+\\)\\(ВСП\\|НУ\\|NU\\)\\{1,1\\}[[:blank:]]\\{1,2\\}\\([^[:blank:]]\\{3\\}\\)" nil t)
+          (replace-match "\\1\\2 \\3"))
+        ;; initials
+        (goto-char (point-min))
+        (while (re-search-forward "\\(^\\|[[:blank:]]+\\)\\([[:alpha:]]\\{1,1\\}\\)\\.[[:blank:]]\\{0,2\\}\\([[:alpha:]]\\{1,1\\}\\)\\.[[:blank:]]\\{1,2\\}\\([[:alpha:]]\\{3\\}\\)" nil t)
+          (replace-match "\\1\\2.\\3. \\4"))
+        (goto-char (point-min))
+        (while (re-search-forward "\\(^\\|[[:blank:]]+\\)\\([[:alpha:]]\\{1,1\\}\\)\\.[[:blank:]]\\{1,2\\}\\([[:alpha:]]\\{3\\}\\)" nil t)
+          (replace-match "\\1\\2. \\3"))
+        (goto-char (point-min))
+        (while (re-search-forward "\\([[:alpha:]]\\{3\\}\\)[[:blank:]]\\{1,2\\}\\([[:alpha:]]\\{1,1\\}\\)\\.[[:blank:]]\\{0,2\\}\\([[:alpha:]]\\{1,1\\}\\)\\." nil t)
+          (replace-match "\\1 \\2.\\3."))
+        (goto-char (point-min))
+        (while (re-search-forward "\\([[:alpha:]]\\{3\\}\\)[[:blank:]]\\{1,2\\}\\([[:alpha:]]\\{1,1\\}\\)\\." nil t)
+          (replace-match "\\1 \\2."))
+        ;; years and pages
+        (goto-char (point-min))
+        (while (re-search-forward "\\([[:digit:]]\\{1\\}\\)[[:blank:]]\\{1,2\\}\\(р\\|року\\|рр\\|с\\|pp\\|p\\)\\{1,1\\}\\(\\.\\|[[:blank:]]\\|$\\)\\{1,1\\}" nil t)
+          (replace-match "\\1 \\2\\3"))
+        (goto-char (point-min))
+        (while (re-search-forward "\\(^\\|[[:blank:]]+\\)\\([[:alpha:]]\\{1,1\\}\\)\\.[[:blank:]]\\{1,2\\}\\([[:digit:]]\\{1\\}\\)" nil t)
+          (replace-match "\\1\\2. \\3"))
+        ;; DD_month
+        (goto-char (point-min))
+        (while (re-search-forward "\\(^\\|[[:blank:]]+\\)\\([[:digit:]]\\{1,2\\}\\)[[:blank:]]\\{1,2\\}\\([[:alpha:]]\\{1,\\}\\)" nil t)
+          (replace-match "\\1\\2 \\3"))
+        )
+      (let ((case-fold-search nil))
+        ;; regalia
+        (goto-char (point-min))
+        (while (re-search-forward "\\(ім\\|доц\\|проф\\|канд\\|м\\|смт\\|prof\\|dr\\|Prof\\|Dr\\)\\.[[:blank:]]\\{1,2\\}\\([[:alpha:]]+\\)" nil t)
+          (replace-match "\\1. \\2"))
+        ))))
+
+(defun yaahtml-prettify-region (begin end)
+  "Make HTML look nicer."
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region begin end)
+      (yaahtml-prettify-tables-region (point-min) (point-max))
+      (yaahtml-prettify-links-region (point-min) (point-max))
+      (yaa-prettify-text-region (point-min) (point-max)))))
+
+(defun yaahtml-prettify-whole-buffer ()
+  "Make HTML look nicer in a whole buffer."
+  (interactive)
+  (yaahtml-prettify-region (point-min) (point-max)))
+
 ;; --------------------
 
 (defun yaref-cpp ()
