@@ -2,7 +2,8 @@
 #
 #  hardlink-cwd.sh - hardlink duplicates in the working dir
 #
-#  Copyright (C) 2013, 2021 Alexander Yermolenko <yaa.mbox@gmail.com>
+#  Copyright (C) 2013, 2021, 2022 Alexander Yermolenko
+#  <yaa.mbox@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -59,12 +60,9 @@ done
         exit 0
     }
 
-read -p "Are you sure to hardlink duplicates in $PWD recursively? " -n 1
-if [[ ! $REPLY =~ ^[Yy]$ ]]
-then
-    echo ""
-    exit 1
-fi
+echo -n "Checking the terminal ..." >&2 && [ -t 0 -a -t 2 ] && echo " OK" >&2 && \
+    read -p "Are you sure to hardlink duplicates in $PWD recursively? " -n 1 && \
+    [[ $REPLY =~ ^[Yy]$ ]] && echo >&2 || { echo " Exiting." >&2; exit 1; }
 
 echo ""
 echo ""

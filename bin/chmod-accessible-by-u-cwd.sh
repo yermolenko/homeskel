@@ -1,11 +1,8 @@
 #!/bin/bash
 
-read -p "Are you sure to make $PWD accessible by owner recursively? " -n 1
-if [[ ! $REPLY =~ ^[Yy]$ ]]
-then
-    echo ""
-    exit 1
-fi
+echo -n "Checking the terminal ..." >&2 && [ -t 0 -a -t 2 ] && echo " OK" >&2 && \
+    read -p "Are you sure to make $PWD accessible by owner recursively? " -n 1 && \
+    [[ $REPLY =~ ^[Yy]$ ]] && echo >&2 || { echo " Exiting." >&2; exit 1; }
 
 echo ""
 
