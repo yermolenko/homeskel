@@ -257,14 +257,29 @@ This works on the current region."
 ;; --------------------
 
 (defun yaa-remove-extra-spaces-region (start end)
-  "Collapse adjacent spaces"
+  "Collapse adjacent spaces, remove leading and trailing spaces"
   (interactive "r")
   (save-excursion
     (save-restriction
       (narrow-to-region start end)
       (goto-char (point-min))
-      (while (re-search-forward "[ \t]+" nil t)
-        (replace-match " ")))))
+      (while (re-search-forward "[[:blank:]]+" nil t)
+        (replace-match " "))
+      (goto-char (point-min))
+      (while (re-search-forward "[[:blank:]]\\{1,1\\} " nil t)
+        (replace-match " "))
+      (goto-char (point-min))
+      (while (re-search-forward " [[:blank:]]\\{1,1\\}" nil t)
+        (replace-match " "))
+      ;; leading spaces
+      (goto-char (point-min))
+      (while (re-search-forward "^[[:blank:] ]+" nil t)
+        (replace-match ""))
+      ;; trailing spaces
+      (goto-char (point-min))
+      (while (re-search-forward "[[:blank:] ]+$" nil t)
+        (replace-match ""))
+      )))
 
 ;; --------------------
 
