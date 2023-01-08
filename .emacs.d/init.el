@@ -290,6 +290,10 @@
               (lambda () (interactive) (yaahtml-wrap-logical-line-with-tag "td")))
             (define-key html-mode-map (kbd "C-c C-c C-l")
               (lambda () (interactive) (yaahtml-wrap-logical-line-with-tag "li")))
+            (define-key html-mode-map (kbd "C-c C-c p t")
+              'yaa-prettify-text-region)
+            (define-key html-mode-map (kbd "C-c C-c p l")
+              'yaahtml-prettify-links-region)
             ))
 
 ;; -------------------
