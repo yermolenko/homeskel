@@ -245,6 +245,7 @@ exit_ssh_via_control_sockets_list()
                 -O exit \
                 "$host"
         ssh_control_sockets_directory="$(dirname $socket_file_name)"
+        [ -e "$socket_file_name" ] && sleep 1
         [ -e "$socket_file_name" ] && \
             removal_was_clean=0 && \
             info "WARNING: socket $socket_file_name still exists"
