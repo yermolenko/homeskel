@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# key: ig
+# --
+<hr />
+<!-- gallery of ${1:10} images: type=${2:jpg} width=${3:700} id=${4:2022MMDD-II} -->
+<p> </p>
+${:$$(
+let (
+    (value "")
+    (count (string-to-number (or (yas-field-value 1) "0")))
+    (type (yas-field-value 2))
+    (width (yas-field-value 3))
+    (id (yas-field-value 4))
+    )
+  (dotimes (index count)
+    (setq value (concat
+                 value
+                 (format "<p align=\\"center\\"><a href=\\"/uploads/news/%s/img-%03d.%s\\" rel=\\"lightbox[news-%s]\\" target=\\"_blank\\" title=\\"Збільшити зображення\\"><img alt=\\"Зображення\\" src=\\"/images/news/%s/img-%03d.%s\\" style=\\"float: none; align: center;\\" title=\\"Збільшити зображення\\" width=\\"%s\\" /></a></p>\\n"
+                 id (+ index 1) type id id (+ index 1) type width))))
+  value
+)}<p> </p>
+$0

@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: uploads
-# key: yuploads
+# group: links
+# key: lfile
 # --
 <a href="${1:/uploads/filename.pdf}" title="${1:$(
 let ((uploads-relative-filename

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: regexp-url-http
+# key: re.url
+# --
+\\(https?://[^<[:space:]]*\\)$0

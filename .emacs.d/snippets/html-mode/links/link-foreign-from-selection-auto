@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: links
+# binding: C-c C-c m m
+# --
+<a rel="noopener nofollow noreferrer" target="_blank" title="Перейти за посиланням" href="`(if (region-active-p) (yas-selected-text) "")`">Посилання &gt;&gt;</a>$0

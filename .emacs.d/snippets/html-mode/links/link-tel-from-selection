@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: links
+# binding: C-c C-c m t
+# --
+<a title="Зателефонувати" href="tel:`(if (region-active-p) (yas-selected-text) "")`">`(yas-selected-text)`</a>$0

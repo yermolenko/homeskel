@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: links
+# key: ln
+# --
+<a title="${3:Перейти за посиланням}" href="${1:HREF}">${2:TEXT}</a>$0

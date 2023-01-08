@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# group: profiles
+# key: sci
+# --
+<p><strong>Обліковий запис науковця (ORCID):</strong> <a rel="nofollow noreferrer" title="Переглянути обліковий запис науковця" target="_blank" href="https://orcid.org/$1">${1:0000-0000-0000-0000}</a></p>
+<p><strong>Обліковий запис науковця (Publons / Web of Science ResearcherID):</strong> <a rel="nofollow noreferrer" title="Переглянути обліковий запис науковця" target="_blank" href="https://www.webofscience.com/wos/author/rid/$2">${2:F-0000-20YY}</a></p>
+<p><strong>Обліковий запис науковця (Scopus):</strong> <a rel="nofollow noreferrer" title="Переглянути обліковий запис науковця" target="_blank" href="https://www.scopus.com/authid/detail.uri?authorId=$3">${3:00000000000}</a></p>
+<p><strong>Обліковий запис науковця (Google Scholar):</strong> <a rel="nofollow noreferrer" title="Переглянути обліковий запис науковця" target="_blank" href="https://scholar.google.com.ua/citations?user=$4">${4:abcd1234}</a></p>
+$0

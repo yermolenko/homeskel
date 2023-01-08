@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: uploads-separate-path
-# key: yuploadsp
-# --
-<a href="${1:/uploads/}${2:filename.pdf}" title="$2 (${3:0} ${4:$$(
-yas-choose-value '("КБ" "МБ" "Б")
-)})">${5:Anchor Text} (${2:$(
-upcase (or (file-name-extension yas-text) "file")
-)}, $3 $4)</a>$0

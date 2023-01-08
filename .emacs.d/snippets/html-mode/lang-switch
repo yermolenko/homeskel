@@ -1,6 +1,5 @@
 # -*- mode: snippet -*-
-# name: lang-switch
-# key: ylang
+# key: langs
 # --
-<p align="right"><a href="/?q=node/${1:NODE_UA}" title="Українська"><img alt="Українська" src="/images/flags/ua.png" style="float:none;max-width: 20%" title="Українська" width="30" /></a>&nbsp;<a href="/?q=node/${1:NODE_EN}" title="English"><img alt="English" src="/images/flags/uk.png" style="float:none;max-width: 20%" title="English" width="30" /></a>&nbsp;<a href="/?q=node/${1:NODE_RU}" title="Русский"><img alt="Русский" src="/images/flags/ru.png" style="float:none;max-width: 20%" title="Русский" width="30" /></a></p>
+<p align="right"><a href="/?q=node/${1:NODE_UA}" title="Українська"><img alt="Українська" src="/images/flags/ua.png" style="float:none;max-width: 20%" title="Українська" width="30" /></a> <a href="/?q=node/${1:NODE_EN}" title="English"><img alt="English" src="/images/flags/uk.png" style="float:none;max-width: 20%" title="English" width="30" /></a> <a href="/?q=node/${1:NODE_RU}" title="Русский"><img alt="Русский" src="/images/flags/ru.png" style="float:none;max-width: 20%" title="Русский" width="30" /></a></p>
 $0

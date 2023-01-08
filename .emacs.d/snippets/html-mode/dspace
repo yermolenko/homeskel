@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
-# name: dspace
-# key: ydspace
+# key: dspace
 # --
 <a title="Переглянути у електронному інституційному репозитарії" href="http://dspace.repo.edu.ua/handle/123456789/${1:ID}"></a>$0

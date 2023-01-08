@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: profiles
+# binding: C-c C-c m r g
+# --
+<a rel="nofollow noreferrer" title="Переглянути обліковий запис науковця" target="_blank" href="https://scholar.google.com.ua/citations?user=$4">https://scholar.google.com.ua/citations?user=${4:`(if (region-active-p) (yas-selected-text) "")`}</a>$0

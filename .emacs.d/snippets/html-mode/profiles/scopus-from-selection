@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: profiles
+# binding: C-c C-c m r s
+# --
+<a rel="nofollow noreferrer" title="Переглянути обліковий запис науковця" target="_blank" href="https://www.scopus.com/authid/detail.uri?authorId=$3">${3:`(if (region-active-p) (yas-selected-text) "")`}</a>$0
