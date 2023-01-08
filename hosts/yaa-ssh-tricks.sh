@@ -120,6 +120,11 @@ check_host_config()
     check_var vnc_local_port_start
 }
 
+prohibit_using_virtual_host_config()
+{
+    [ -e ./.virtual ] && die "The host config is virtual. Remove ./.virtual to use it"
+}
+
 ssh_login()
 {
     require_var host
@@ -127,6 +132,8 @@ ssh_login()
     require_var ssh_port
 
     require ssh
+
+    prohibit_using_virtual_host_config
 
     if var_is_declared ssh_password;
     then
@@ -157,6 +164,8 @@ ssh_copy_id()
 
     require ssh-copy-id
 
+    prohibit_using_virtual_host_config
+
     ssh-copy-id -p $ssh_port "${extra_ssh_options[@]}" "$user@$host"
 }
 
@@ -168,6 +177,8 @@ sftp_interactive()
 
     require sftp
 
+    prohibit_using_virtual_host_config
+
     sftp "${extra_ssh_options[@]}" -P $ssh_port "$user@$host"
 }
 
@@ -178,6 +189,8 @@ sshfs_mount()
     require_var ssh_port
 
     require sshfs
+
+    prohibit_using_virtual_host_config
 
     [ -e ./fs ] || mkdir ./fs
     [ -d ./fs ] || die "Cannot create mountpoint"
@@ -266,6 +279,8 @@ local_port_forwarding_setup()
 
     require ssh
 
+    prohibit_using_virtual_host_config
+
     local_port_start=${1:?Local port number is required}
     remote_port_start=${2:?Remote port number is required}
     forwarded_ports_count=${3:-1}
@@ -302,6 +317,8 @@ local_port_forwarding_setup_from_config()
 {
     require_var local_port_forwarding_pairs
 
+    prohibit_using_virtual_host_config
+
     for port_fwd_pair in "${local_port_forwarding_pairs[@]}" ; do
         local_port=${port_fwd_pair%%:*}
         remote_port=${port_fwd_pair#*:}
@@ -322,6 +339,8 @@ remote_port_forwarding_setup()
     require_var ssh_port
 
     require ssh
+
+    prohibit_using_virtual_host_config
 
     info "To bind to non-loopback interfaces on the server GatewayPorts should be enabled in sshd_config"
 
@@ -361,6 +380,8 @@ remote_port_forwarding_setup_from_config()
 {
     require_var remote_port_forwarding_pairs
 
+    prohibit_using_virtual_host_config
+
     for port_fwd_pair in "${remote_port_forwarding_pairs[@]}" ; do
         remote_port=${port_fwd_pair%%:*}
         local_port=${port_fwd_pair#*:}
@@ -384,6 +405,8 @@ socks_proxy()
 
     require ssh
 
+    prohibit_using_virtual_host_config
+
     ssh -D 127.0.0.1:$socks_proxy_local_port -C -N \
         -o ExitOnForwardFailure=yes \
         -o ConnectTimeout=15 \
@@ -401,6 +424,8 @@ socks_proxy_setup()
     require_var socks_proxy_local_port
 
     require ssh
+
+    prohibit_using_virtual_host_config
 
     ssh_control_sockets_list_file=./socks_proxy.ssh_control_sockets
 
@@ -433,6 +458,8 @@ vnc_setup()
     require_var vnc_local_port_start
 
     require ssh
+
+    prohibit_using_virtual_host_config
 
     vnc_remote_port=$vnc_remote_port_start
     vnc_local_port=$vnc_local_port_start
@@ -470,6 +497,8 @@ vnc_remove()
     # require_var remote_x11_server_displays
 
     require ssh
+
+    prohibit_using_virtual_host_config
 
     ssh -p $ssh_port \
         "${extra_ssh_options[@]}" \
