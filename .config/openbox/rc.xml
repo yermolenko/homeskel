@@ -411,12 +411,18 @@
         <enabled>true</enabled>
         <name>PCManFM</name>
       </startupnotify>
+      <!--
+      <command>lxsession-default file_manager</command>
+      -->
       <command>pcmanfm-qt</command>
     </action>
   </keybind>
   <!--keybindings for LXPanel -->
   <keybind key="W-u">
     <action name="Execute">
+      <!--
+      <command>lxsession-default launcher</command>
+      -->
       <!--
       <command>lxqt-runner</command>
       -->
@@ -425,6 +431,9 @@
   </keybind>
   <keybind key="A-F2">
     <action name="Execute">
+      <!--
+      <command>lxsession-default launcher</command>
+      -->
       <!--
       <command>lxqt-runner</command>
       -->
