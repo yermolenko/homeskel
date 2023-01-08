@@ -2,8 +2,8 @@
 #
 #  yaa-ssh-tricks - various ssh-based tricks
 #
-#  Copyright (C) 2010, 2013, 2019, 2020, 2021, 2022 Alexander Yermolenko
-#  <yaa.mbox@gmail.com>
+#  Copyright (C) 2010, 2013, 2019, 2020, 2021, 2022, 2023 Alexander
+#  Yermolenko <yaa.mbox@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,37 +23,79 @@
 
 die()
 {
-    msg=${1:-"Unknown Error"}
-    echo "ERROR: $msg" 1>&2
+    local msg=${1:-"Unknown error"}
+    shift
+    echo "ERROR: $msg $@" 1>&2
+    call_function_if_declared finalize
     exit 1
 }
 
-info()
+goodbye()
 {
-    msg=${1:-"Info"}
-    echo "INFO: $msg" 1>&2
+    die "Cancelled by user"
 }
 
 require()
 {
     local cmd=${1:?"Command name is required"}
     local extra_info=${2:+"\nNote: $2"}
-    hash $cmd 2>/dev/null || die "$cmd not found$extra_info"
+    hash "$cmd" 2>/dev/null || die "$cmd not found$extra_info"
 }
 
-require_var()
+function_is_declared()
 {
-    declare -p "$1" >/dev/null 2>&1 || die "$1 is not declared"
+    declare -f -F ${1:?"Function name is required"} >/dev/null 2>&1
 }
 
-check_var()
+call_function_if_declared()
 {
-    declare -p "$1" >/dev/null 2>&1 && echo "$1: OK" || echo "$1: is not declared"
+    local function_name=${1:?"Function name is required"}
+    shift
+    function_is_declared "$function_name" && "$function_name" "$@"
 }
 
 var_is_declared()
 {
-    declare -p "$1" >/dev/null 2>&1
+    declare -p ${1:?"Variable name is required"} >/dev/null 2>&1
+}
+
+var_is_declared_and_nonzero()
+{
+    local var_name=${1:?"Variable name is required"}
+    var_is_declared "$var_name" && [ "${!var_name}" -ne 0 ]
+}
+
+flag_is_set()
+{
+    var_is_declared_and_nonzero "$1"
+}
+
+flag_is_unset()
+{
+    ! var_is_declared_and_nonzero "$1"
+}
+
+info()
+{
+    local msg=${1:-"Unspecified message"}
+    shift
+    flag_is_set quiet_mode || \
+        echo "INFO: $msg $@" 1>&2
+}
+
+require_var()
+{
+    var_is_declared "$1" || die "Variable '$1' is not declared"
+}
+
+check_var()
+{
+    var_is_declared "$1" && info "$1: declared" || info "$1: not declared"
+}
+
+timestamp()
+{
+    echo $(date "+%Y%m%d-%H%M%S")
 }
 
 check_host_config()
