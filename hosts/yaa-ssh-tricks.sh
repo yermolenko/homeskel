@@ -262,6 +262,18 @@ exit_ssh_via_control_sockets_list()
         [ -e "$socket_file_name" ] && \
             removal_was_clean=0 && \
             info "WARNING: socket $socket_file_name still exists"
+
+        [ -e "$socket_file_name.stdout" ] && [ $removal_was_clean -eq 1 ] && \
+            rm "$socket_file_name.stdout"
+        [ -e "$socket_file_name.stdout" ] && \
+            removal_was_clean=0 && \
+            info "WARNING: log file $socket_file_name.stdout still exists"
+
+        [ -e "$socket_file_name.stderr" ] && [ $removal_was_clean -eq 1 ] && \
+            rm "$socket_file_name.stderr"
+        [ -e "$socket_file_name.stderr" ] && \
+            removal_was_clean=0 && \
+            info "WARNING: log file $socket_file_name.stderr still exists"
     done < "$ssh_control_sockets_list_file"
 
     [ $removal_was_clean -eq 1 ] && \
@@ -304,7 +316,8 @@ local_port_forwarding_setup()
             -C -N -f -p $ssh_port \
             "${extra_ssh_options[@]}" -o ExitOnForwardFailure=yes \
             -L $local_port:127.0.0.1:$remote_port \
-            "$user@$host"
+            "$user@$host" \
+            > "$socket_file_name.stdout" 2> "$socket_file_name.stderr" || info "$(timestamp): ssh lpf setup call failed"
 
         echo "$socket_file_name" >> "$ssh_control_sockets_list_file"
 
@@ -367,7 +380,8 @@ remote_port_forwarding_setup()
             -C -N -f -p $ssh_port \
             "${extra_ssh_options[@]}" -o ExitOnForwardFailure=yes \
             -R :$remote_port:127.0.0.1:$local_port \
-            "$user@$host"
+            "$user@$host" \
+            > "$socket_file_name.stdout" 2> "$socket_file_name.stderr" || info "$(timestamp): ssh rpf setup call failed"
 
         echo "$socket_file_name" >> "$ssh_control_sockets_list_file"
 
@@ -437,7 +451,8 @@ socks_proxy_setup()
         -C -N -f -p $ssh_port \
         "${extra_ssh_options[@]}" -o ExitOnForwardFailure=yes \
         -D 127.0.0.1:$socks_proxy_local_port \
-        "$user@$host"
+        "$user@$host" \
+        > "$socket_file_name.stdout" 2> "$socket_file_name.stderr" || info "$(timestamp): ssh call failed"
 
     echo "$socket_file_name" >> "$ssh_control_sockets_list_file"
 }
