@@ -81,6 +81,22 @@ kb_us_intl()
         -option 'ctrl:nocaps'
 }
 
+kb_us_us_altgr_intl()
+{
+    setxkbmap \
+        -layout "us,us" \
+        -variant ",altgr-intl" \
+        -option "grp:shifts_toggle,compose:menu,ctrl:nocaps"
+}
+
+kb_us_us_intl()
+{
+    setxkbmap \
+        -layout "us,us" \
+        -variant ",intl" \
+        -option "grp:shifts_toggle,compose:menu,ctrl:nocaps"
+}
+
 kb_us_gr()
 {
     setxkbmap \
