@@ -193,8 +193,8 @@ sshfs_mount()
         ssh_command_option_for_sshfs=()
     fi
 
-    echo "extra_sshfs_options: ${extra_sshfs_options[@]}"
-    echo "ssh_command_option_for_sshfs: ${ssh_command_option_for_sshfs[@]}"
+    info "extra_sshfs_options: ${extra_sshfs_options[@]}"
+    info "ssh_command_option_for_sshfs: ${ssh_command_option_for_sshfs[@]}"
 
     if var_is_declared ssh_password;
     then
@@ -240,14 +240,14 @@ exit_ssh_via_control_sockets_list()
 
     while IFS= read -r socket_file_name; do
         [ -e "$socket_file_name" ] && \
-            echo "Sending exit command to the socket: $socket_file_name" && \
+            info "Sending exit command to the socket: $socket_file_name" && \
             ssh -S "$socket_file_name" \
                 -O exit \
                 "$host"
         ssh_control_sockets_directory="$(dirname $socket_file_name)"
         [ -e "$socket_file_name" ] && \
             removal_was_clean=0 && \
-            echo "WARNING: socket $socket_file_name still exists"
+            info "WARNING: socket $socket_file_name still exists"
     done < "$ssh_control_sockets_list_file"
 
     [ $removal_was_clean -eq 1 ] && \
@@ -280,7 +280,7 @@ local_port_forwarding_setup()
         remote_port=$(( $remote_port_start + $port_shift ))
         local_port=$(( $local_port_start + $port_shift ))
 
-        echo "Preparing port forwarding: local $local_port -> remote $remote_port ..."
+        info "Preparing port forwarding: local $local_port -> remote $remote_port ..."
 
         socket_file_name="$tempdir/.ssh-${host:${#host}<15?0:-15}-lpf-$remote_port-$local_port"
 
@@ -304,7 +304,7 @@ local_port_forwarding_setup_from_config()
     for port_fwd_pair in "${local_port_forwarding_pairs[@]}" ; do
         local_port=${port_fwd_pair%%:*}
         remote_port=${port_fwd_pair#*:}
-        echo "Read from config: local_port: $local_port, remote_port: $remote_port"
+        info "Read from config: local_port: $local_port, remote_port: $remote_port"
         local_port_forwarding_setup $local_port $remote_port
     done
 }
@@ -339,7 +339,7 @@ remote_port_forwarding_setup()
         remote_port=$(( $remote_port_start + $port_shift ))
         local_port=$(( $local_port_start + $port_shift ))
 
-        echo "Preparing port forwarding: remote $remote_port -> local $local_port ..."
+        info "Preparing port forwarding: remote $remote_port -> local $local_port ..."
 
         socket_file_name="$tempdir/.ssh-${host:${#host}<15?0:-15}-rpf-$remote_port-$local_port"
 
@@ -363,7 +363,7 @@ remote_port_forwarding_setup_from_config()
     for port_fwd_pair in "${remote_port_forwarding_pairs[@]}" ; do
         remote_port=${port_fwd_pair%%:*}
         local_port=${port_fwd_pair#*:}
-        echo "Read from config: remote_port: $remote_port, local_port: $local_port"
+        info "Read from config: remote_port: $remote_port, local_port: $local_port"
         remote_port_forwarding_setup $remote_port $local_port
     done
 }
@@ -437,7 +437,7 @@ vnc_setup()
     vnc_local_port=$vnc_local_port_start
 
     for x11_server_display in "${remote_x11_server_displays[@]}" ; do
-        echo "Setting up x11vnc for display $x11_server_display"
+        info "Setting up x11vnc for display $x11_server_display"
 
         local_port_forwarding_setup \
             $vnc_local_port \
@@ -488,7 +488,7 @@ vnc_run_ssvncviewer()
     require ssvncviewer
 
     vnc_local_port=${1:-$vnc_local_port_start}
-    echo "Connecting to 127.0.0.1:$vnc_local_port"
+    info "Connecting to 127.0.0.1:$vnc_local_port"
     ssvncviewer -16bpp 127.0.0.1:$vnc_local_port
 }
 
@@ -499,7 +499,7 @@ vnc_run_ssvncviewer_viewonly()
     require ssvncviewer
 
     vnc_local_port=${1:-$vnc_local_port_start}
-    echo "Connecting to 127.0.0.1:$vnc_local_port"
+    info "Connecting to 127.0.0.1:$vnc_local_port"
     ssvncviewer -16bpp -viewonly 127.0.0.1:$vnc_local_port
 }
 
