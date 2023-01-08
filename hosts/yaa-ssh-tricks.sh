@@ -421,12 +421,44 @@ socks_proxy()
 
     prohibit_using_virtual_host_config
 
-    ssh -D 127.0.0.1:$socks_proxy_local_port -C -N \
-        -o ExitOnForwardFailure=yes \
-        -o ConnectTimeout=15 \
-        "${extra_ssh_options[@]}" \
-        -p $ssh_port -l "$user" "$host"
-    #-q
+    local ssh_command=(ssh)
+    ssh_command+=(-D 127.0.0.1:$socks_proxy_local_port -C -N)
+    ssh_command+=(-o ExitOnForwardFailure=yes)
+    ssh_command+=(-o ConnectTimeout=15)
+    ssh_command+=("${extra_ssh_options[@]}")
+    ssh_command+=(-p $ssh_port)
+    ssh_command+=(-l "$user" "$host")
+
+    local ssh_log_base="./socks_proxy"
+
+    if var_is_declared ssh_password;
+    then
+        require sshpass
+
+        local sshpass_command=(sshpass -e)
+        sshpass_command+=("${ssh_command[@]}")
+
+        SSHPASS="$ssh_password" "${sshpass_command[@]}" \
+            1> "$ssh_log_base.stdout" \
+            2> "$ssh_log_base.stderr" || \
+            info "$(timestamp): ssh dpf setup call failed"
+    elif var_is_declared ssh_password_file;
+    then
+        require sshpass
+
+        local sshpass_command=(sshpass -f "$ssh_password_file")
+        sshpass_command+=("${ssh_command[@]}")
+
+        "${sshpass_command[@]}" \
+            1> "$ssh_log_base.stdout" \
+            2> "$ssh_log_base.stderr" || \
+            info "$(timestamp): ssh dpf setup call failed"
+    else
+        "${ssh_command[@]}" \
+            1> "$ssh_log_base.stdout" \
+            2> "$ssh_log_base.stderr" || \
+            info "$(timestamp): ssh dpf setup call failed"
+    fi
 }
 
 socks_proxy_setup()
