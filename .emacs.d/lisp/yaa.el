@@ -852,7 +852,7 @@ This works on the current region."
       (let ((case-fold-search t))
         ;; apostrophes
         (goto-char (point-min))
-        (while (re-search-forward "\\([[:alpha:]]\\{1,1\\}\\)[’ʼ]\\{1,1\\}\\([[:alpha:]]\\{1,1\\}\\)" nil t)
+        (while (re-search-forward "\\([[:alpha:]]\\{1,1\\}\\)[’ʼ‘]\\{1,1\\}\\([[:alpha:]]\\{1,1\\}\\)" nil t)
           (replace-match "\\1'\\2"))
         ;; № X
         (goto-char (point-min))
@@ -877,7 +877,7 @@ This works on the current region."
           (replace-match "\\1 \\2."))
         ;; years and pages
         (goto-char (point-min))
-        (while (re-search-forward "\\([[:digit:]]\\{1\\}\\)[[:blank:]]\\{1,2\\}\\(р\\|року\\|рр\\|с\\|pp\\|p\\)\\{1,1\\}\\(\\.\\|[[:blank:]]\\|$\\)\\{1,1\\}" nil t)
+        (while (re-search-forward "\\([[:digit:]]\\{1\\}\\)[[:blank:]]\\{1,2\\}\\(р\\|року\\|році\\|рр\\|с\\|pp\\|p\\)\\{1,1\\}\\(\\.\\|[[:blank:]]\\|$\\)\\{1,1\\}" nil t)
           (replace-match "\\1 \\2\\3"))
         (goto-char (point-min))
         (while (re-search-forward "\\(^\\|[[:blank:]]+\\)\\([[:alpha:]]\\{1,1\\}\\)\\.[[:blank:]]\\{1,2\\}\\([[:digit:]]\\{1\\}\\)" nil t)
