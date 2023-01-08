@@ -131,7 +131,7 @@ ssh_login()
     if var_is_declared ssh_password;
     then
         require sshpass
-        SSHPASS=$ssh_password sshpass -e \
+        SSHPASS="$ssh_password" sshpass -e \
                ssh "${extra_ssh_options[@]}" \
                -p $ssh_port \
                "$user@$host"
