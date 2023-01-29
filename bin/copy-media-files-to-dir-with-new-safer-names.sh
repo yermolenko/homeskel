@@ -4,7 +4,7 @@
 #  recursively found multimedia files with renaming for better
 #  compatibility with various devices and filesystems
 #
-#  Copyright (C) 2014, 2017, 2021, 2022 Alexander Yermolenko
+#  Copyright (C) 2014, 2017, 2021, 2022, 2023 Alexander Yermolenko
 #  <yaa.mbox@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -21,90 +21,12 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-die()
-{
-    local msg=${1:-"Unknown error"}
-    shift
-    echo "ERROR: $msg $@" 1>&2
-    exit 1
-}
-
-goodbye()
-{
-    local msg=${1:-"Cancelled by user"}
-    shift
-    echo "INFO: $msg $@" 1>&2
-    exit 1
-}
-
-info()
-{
-    local msg=${1:-"Info"}
-    shift
-    echo "INFO: $msg $@" 1>&2
-}
-
-require()
-{
-    local cmd=${1:?"Command name is required"}
-    local extra_info=${2:+"\nNote: $2"}
-    hash $cmd 2>/dev/null || die "$cmd not found$extra_info"
-}
-
-require_var()
-{
-    declare -p "$1" >/dev/null 2>&1 || die "$1 is not declared"
-}
-
-check_var()
-{
-    declare -p "$1" >/dev/null 2>&1 && echo "$1: OK" || echo "$1: is not declared"
-}
-
-var_is_declared()
-{
-    declare -p "$1" >/dev/null 2>&1
-}
-
-urlencode_path()
-{
-    local string="${1}"
-    string="$( echo -n "$string" | jq -sRr @uri )"
-    string=${string//%2F/\/}
-    echo -n "$string"
-}
-
-romanize()
-{
-    cat | \
-        sed 'y/абвгґджзиійклмнопрстуфхыэе/abvhgdjziijklmnoprstufhyee/' | \
-        sed 'y/АБВГҐДЖЗИІЙКЛМНОПРСТУФХЫЭЕ/ABVHGDJZIIJKLMNOPRSTUFHYEE/' | \
-        sed 's/[ьъ]//g; s/ё/yo/g; s/є/ye/g; s/ї/yi/g; s/ц/ts/g; s/ч/ch/g; s/ш/sh/g; s/щ/sh/g; s/ю/yu/g; s/я/ya/' | \
-        sed 's/[ЬЪ]//g; s/Ё/YO/g; s/Є/YE/g; s/Ї/YI/g; s/Ц/TS/g; s/Ч/CH/g; s/Ш/SH/g; s/Щ/SH/g; s/Ю/YU/g; s/Я/YA/' | \
-        tr -cd '[:alnum:]._\- '
-}
-
-romanize_string()
-{
-    local string="${1:?String argument is required}"
-    string="$( echo -n "$string" | romanize )"
-    echo -n "$string"
-}
-
-sanitize_for_m3u()
-{
-    sed -e "s/[^ _a-zA-Zа-яА-Я0-9\,\.\-]//g" -e 's/ \+/ /'
-}
-
-sanitize_for_m3u_string()
-{
-    local string="${1:?String argument is required}"
-    string="$( echo -n "$string" | sanitize_for_m3u )"
-    echo -n "$string"
-}
-
 scriptdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$scriptdir/yaa-tools.sh" || \
+    source "yaa-tools.sh" || exit 1
 date=`date "+%Y%m%d-%H%M%S"`
+
+include yaa-text-tools.sh
 
 # ! touch "$scriptdir/powned.txt" > /dev/null 2>&1 || die "The script can escape the sandbox"
 
@@ -175,8 +97,8 @@ do
         videofile_title="$upload_date_from_info_json - $title_from_info_json - $videofile_title"
 
     [ $romanize -eq 1 ] && \
-        videofile_title="$( romanize_string "$videofile_title" )"
-    videofile_title="$( sanitize_for_m3u_string "$videofile_title" )"
+        videofile_title="$( printf %s "$videofile_title" | romanize )"
+    videofile_title="$( printf %s "$videofile_title" | sanitize_for_m3u_title )"
 
     cp -H "$videofile" "$output_dir/$videofile_title" || die "Cannot copy file to the destination"
 done
