@@ -30,15 +30,17 @@ require sed
 
 usage()
 {
-    echo "usage: $0 [--no-test] [--romanize] [file_or_directory]"
+    echo "usage: $0 [--no-test] [--romanize] [--prettify] [file_or_directory]"
 }
 
 test=1
 romanize=0
+prettify=0
 
 while [ "$1" != "" ]; do
     [[ "$1" == --no-test ]] && test=0 && shift && continue
     [[ "$1" == --romanize ]] && romanize=1 && shift && continue
+    [[ "$1" == --prettify ]] && prettify=1 && shift && continue
 
     [[ "$1" == -h || "$1" == --help ]] && usage && exit
     [[ "$1" == -* ]] && usage 1>&2 && exit 1
@@ -53,6 +55,8 @@ done
 # flag_is_set test && info "DRY RUN"
 # require_var romanize
 # info "romanize: $romanize"
+# require_var prettify
+# info "prettify: $prettify"
 # require_var filename
 # info "filename: $filename"
 
@@ -67,6 +71,8 @@ newbasename="$basename"
 newbasename=`printf %s "$newbasename" | sanitize_for_windows_filename`
 flag_is_set romanize && \
     newbasename=`printf %s "$newbasename" | romanize`
+flag_is_set prettify && \
+    newbasename=`printf %s "$newbasename" | sanitize_for_pretty_filename`
 newbasename="${newbasename:-_totally_illegal_filename_it_was_}"
 
 [[ "$basename" != "$newbasename" ]] && \

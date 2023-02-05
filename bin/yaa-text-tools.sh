@@ -84,10 +84,16 @@ sanitize_for_windows_filename()
         sed -E 'y/:/-/' | \
         sed -E 's/^\s*//' | \
         sed -E 's/\s*$//' | \
-        sed -E 's/\s+\././g' | \
         sed -E 's/\.+$//g' | \
+        tr -d '*"<>|\\\/\n\?'
+}
+
+sanitize_for_pretty_filename()
+{
+    sanitize_for_windows_filename | \
+        sed -E 's/\s+\././g' | \
         sed -E "s/'//g" | \
-        tr -d '[*"<>|[\]\n\?]'
+        tr -d '[]'
 }
 
 sanitize_for_m3u_title()
