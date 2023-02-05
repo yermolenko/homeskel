@@ -67,12 +67,11 @@ info "Processing files"
 find "$dirname" -mount -type f -print0 | \
     xargs -0 -I {} -P 1 \
           rename "${rename_options[@]}" \
-          's/[*"<>|[\]\n\?]//g;
+          's/[*"<>|\\\n\?]//g;
            s/:/-/g;
            s/^\s*//;
            s/\s*$//;
-           s/\s+\././g;
-           s/\.+$//g; '"s/'//g" \
+           s/\.+$//g; ' \
           '{}'
 
 info "Processing directories"
@@ -80,10 +79,9 @@ info "Processing directories"
 find "$dirname" -mount -type d -print0 | \
     xargs -0 -I {} -P 1 \
           rename "${rename_options[@]}" \
-          's/[*"<>|[\]\n\?]//g;
+          's/[*"<>|\\\n\?]//g;
            s/:/-/g;
            s/^\s*//;
            s/\s*$//;
-           s/\s+\././g;
-           s/\.+$//g; '"s/'//g" \
+           s/\.+$//g; ' \
           '{}'
