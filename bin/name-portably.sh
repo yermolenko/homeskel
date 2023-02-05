@@ -72,7 +72,7 @@ newbasename="${newbasename:-_totally_illegal_filename_it_was_}"
 [[ "$basename" != "$newbasename" ]] && \
     {
         flag_is_set test && info "DRY RUN"
-        info "renaming \"$basename\" to \"$newbasename\""
+        info "renaming \"$basename\" to \"$newbasename\" in \"$dirname\""
         [ -e "$newbasename" ] && die "file or directory $newbasename already exists"
         flag_is_unset test && \
             {
