@@ -56,7 +56,7 @@ require()
 include()
 {
     local bash_source=${1:?"bash source filename is required"}
-    source "$scriptdir/$bash_source" || \
+    source "$scriptdir/$bash_source" 2>/dev/null || \
         source "$bash_source" || die "bash source $bash_source not found"
 }
 

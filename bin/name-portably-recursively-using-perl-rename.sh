@@ -20,7 +20,7 @@
 #
 
 scriptdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source "$scriptdir/yaa-tools.sh" || \
+source "$scriptdir/yaa-tools.sh" 2>/dev/null || \
     source "yaa-tools.sh" || exit 1
 date=`date "+%Y%m%d-%H%M%S"`
 
