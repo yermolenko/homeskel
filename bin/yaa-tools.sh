@@ -53,6 +53,15 @@ require()
     hash "$cmd" >/dev/null 2>&1 || die "$cmd not found! $@"
 }
 
+find_tool()
+{
+    local tool=${1:?"Tool name is required"}
+    local cmd=./"$tool"
+    [ -f "$cmd" ] || cmd="$scriptdir/$tool"
+    [ -f "$cmd" ] || { cmd=$(which "$tool"); require "$tool"; }
+    printf "%s" "$cmd"
+}
+
 include()
 {
     local bash_source=${1:?"bash source filename is required"}

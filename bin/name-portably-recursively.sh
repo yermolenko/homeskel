@@ -23,7 +23,8 @@ source "$scriptdir/yaa-tools.sh" 2>/dev/null || \
     source "yaa-tools.sh" || exit 1
 date=`date "+%Y%m%d-%H%M%S"`
 
-require name-portably.sh
+name_portably_script=`find_tool name-portably.sh`
+info "using \"$name_portably_script\" as a 'name-portably' tool"
 
 usage()
 {
@@ -69,10 +70,10 @@ info "Processing files"
 
 find "$dirname" -mount -type f -print0 | \
     xargs -0 -I {} -P 1 \
-          name-portably.sh "${rename_options[@]}" '{}'
+          "$name_portably_script" "${rename_options[@]}" '{}'
 
 info "Processing directories"
 
 find "$dirname" -mount -type d -print0 | \
     xargs -0 -I {} -P 1 \
-          name-portably.sh "${rename_options[@]}" '{}'
+          "$name_portably_script" "${rename_options[@]}" '{}'
