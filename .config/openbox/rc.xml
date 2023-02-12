@@ -334,7 +334,7 @@
     </action>
   </keybind>
     <!-- Keybindings for windows -->
-    <keybind key="A-F4">
+    <keybind key="A-F4 W-h">
     <action name="If">
       <title>* - nsvm</title>
       <then><!-- Do nothing for foo --></then>
