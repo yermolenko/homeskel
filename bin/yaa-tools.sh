@@ -55,11 +55,13 @@ require()
 
 find_tool()
 {
-    local tool=${1:?"Tool name is required"}
+    local tool_var_name=${1:?"Tool location container variable name is required"}
+    var_is_declared "$tool_var_name" && die "Variable '$tool_var_name' is already declared"
+    local tool=${2:?"Tool executable name is required"}
     local cmd=./"$tool"
     [ -f "$cmd" ] || cmd="$scriptdir/$tool"
     [ -f "$cmd" ] || { cmd=$(which "$tool"); require "$tool"; }
-    printf "%s" "$cmd"
+    declare -g $tool_var_name="$cmd"
 }
 
 include()

@@ -23,7 +23,7 @@ source "$scriptdir/yaa-tools.sh" 2>/dev/null || \
     source "yaa-tools.sh" || exit 1
 date=`date "+%Y%m%d-%H%M%S"`
 
-name_portably_script=`find_tool name-portably.sh`
+find_tool name_portably_script name-portably.sh
 info "using \"$name_portably_script\" as a 'name-portably' tool"
 
 usage()
