@@ -364,7 +364,7 @@
           <action name="Raise"/>
           <action name="Unshade"/>
         </finalactions>
-        <allDesktops>yes</allDesktops>
+        <allDesktops>no</allDesktops>
       </action>
     </keybind>
   <!--
@@ -377,7 +377,7 @@
           <action name="Raise"/>
           <action name="Unshade"/>
         </finalactions>
-        <allDesktops>yes</allDesktops>
+        <allDesktops>no</allDesktops>
       </action>
     </keybind>
     <!-- Keybindings for window switching with the arrow keys -->
