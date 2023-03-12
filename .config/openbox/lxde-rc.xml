@@ -257,6 +257,17 @@
     <keybind key="W-F8">
       <action name="ToggleAlwaysOnTop"/>
     </keybind>
+    <keybind key="W-f">
+      <action name="ToggleMaximize"/>
+      <!-- <action name="UnmaximizeFull"/> -->
+      <!-- <action name="MaximizeVert"/> -->
+      <action name ="MoveResizeTo">
+        <x>0</x>
+        <y>0</y>
+        <width>1024</width>
+        <height>768</height>
+      </action>
+    </keybind>
     <keybind key="W-l">
       <action name="Execute">
         <command>xscreensaver-command -lock</command>
