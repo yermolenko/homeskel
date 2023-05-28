@@ -2,7 +2,7 @@
 #
 #  ytdl-batch-to-dir - convenient downloading of videos
 #
-#  Copyright (C) 2014, 2017, 2021, 2022 Alexander Yermolenko
+#  Copyright (C) 2014, 2017, 2021, 2022, 2023 Alexander Yermolenko
 #  <yaa.mbox@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -74,13 +74,15 @@ min_free_disk_space=1000000
 
 usage()
 {
-    echo "usage: $0 [--audio-only] [[--use-tor] | [--proxy <proxy>]] ytdl_batch_file [output_dir]"
+    echo "usage: $0 [--audio-only] [--hd] [[--use-tor] | [--proxy <proxy>]] ytdl_batch_file [output_dir]"
 }
 
 audio_only=0
+hd=0
 
 while [ "$1" != "" ]; do
     [[ "$1" == --audio-only ]] && audio_only=1 && shift && continue
+    [[ "$1" == --hd ]] && hd=1 && shift && continue
     [[ "$1" == --use-tor ]] && proxy=socks5://127.0.0.1:9050/ && shift && continue
     [[ "$1" == --proxy ]] && shift && proxy="${1:?Bad proxy specification}" && shift && continue
 
@@ -102,6 +104,7 @@ var_is_declared proxy && echo "proxy: $proxy"
 #     echo "proxy: $proxy"
 # fi
 echo "audio_only: $audio_only"
+echo "hd: $hd"
 echo "batch_file: $batch_file"
 echo "output_dir: $output_dir"
 
@@ -136,7 +139,11 @@ var_is_declared proxy && \
     ytdl_command+=(--proxy "$proxy")
 [ $audio_only -eq 1 ] && \
     ytdl_command+=(--extract-audio --audio-format mp3 --audio-quality 256K) || \
-        ytdl_command+=(--format 'mp4[height<=480]/bestvideo[height<=480]+mp4/bestaudio/best')
+      {
+          [ $hd -eq 1 ] && \
+              ytdl_command+=(--format 'mp4[height<=720]/bestvideo[height<=720]+mp4/bestaudio/best') || \
+                  ytdl_command+=(--format 'mp4[height<=480]/bestvideo[height<=480]+mp4/bestaudio/best')
+      }
 ytdl_command+=(--ignore-errors)
 ytdl_command+=(--output "%(upload_date)s-%(id)s.mp4")
 ytdl_command+=(--restrict-filenames)
