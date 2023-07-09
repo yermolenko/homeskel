@@ -283,6 +283,19 @@ This works on the current region."
 
 ;; --------------------
 
+(defun yaa-make-spaces-nonbreaking-region (start end)
+  "Make all spaces nonbreaking"
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region start end)
+      (goto-char (point-min))
+      (while (re-search-forward "[[:blank:]]\\{1,1\\}" nil t)
+        (replace-match " "))
+      )))
+
+;; --------------------
+
 (defun yaa-fix-apostrophes-region (start end)
   "Replace “’” to “'”"
   (interactive "r")
