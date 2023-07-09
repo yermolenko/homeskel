@@ -198,7 +198,7 @@ sshfs_mount()
     if [ ${#extra_ssh_options[@]} -eq 0 ]; then
         ssh_command_option_for_sshfs=()
     else
-        ssh_command_option_for_sshfs=(-o ssh_command="ssh ${extra_ssh_options[@]}")
+        ssh_command_option_for_sshfs=(-o ssh_command="ssh ${extra_ssh_options[*]}")
     fi
 
     if var_is_declared do_not_pass_extra_ssh_options_to_sshfs;
