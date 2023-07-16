@@ -188,7 +188,7 @@
   <keyboard>
     <chainQuitKey>C-g</chainQuitKey>
     <!-- Keybindings for desktop switching -->
-  <!--
+    <!--
     <keybind key="C-A-Left">
       <action name="GoToDesktop">
         <to>left</to>
@@ -238,121 +238,123 @@
       </action>
     </keybind>
   -->
-  <keybind key="W-Left">
-    <action name="SendToDesktopLeft">
-      <dialog>no</dialog>
-      <wrap>no</wrap>
-    </action>
-  </keybind>
-  <keybind key="W-Right">
-    <action name="SendToDesktopRight">
-      <dialog>no</dialog>
-      <wrap>no</wrap>
-    </action>
-  </keybind>
-  <keybind key="W-Up">
-    <action name="SendToDesktopUp">
-      <dialog>no</dialog>
-      <wrap>no</wrap>
-    </action>
-  </keybind>
-  <keybind key="W-Down">
-    <action name="SendToDesktopDown">
-      <dialog>no</dialog>
-      <wrap>no</wrap>
-    </action>
-  </keybind>
-  <keybind key="W-F1">
-    <action name="Desktop">
-      <desktop>1</desktop>
-    </action>
-    <action name="Execute">
-      <command>pactl set-sink-mute 0 toggle</command>
-    </action>
-  </keybind>
-  <keybind key="KP_Insert">
-    <action name="Execute">
-      <command>pactl set-sink-mute 0 toggle</command>
-    </action>
-  </keybind>
-  <keybind key="W-F2">
-    <action name="Desktop">
-      <desktop>2</desktop>
-    </action>
-  </keybind>
-  <keybind key="W-F3">
-    <action name="Desktop">
-      <desktop>3</desktop>
-    </action>
-  </keybind>
-  <keybind key="W-F4">
-    <action name="Desktop">
-      <desktop>4</desktop>
-    </action>
-  </keybind>
-  <keybind key="W-F8">
-    <action name="ToggleAlwaysOnTop"/>
-  </keybind>
-  <keybind key="W-f">
-    <action name="ToggleMaximize"/>
-    <!-- <action name="UnmaximizeFull"/> -->
-    <!-- <action name="MaximizeVert"/> -->
-    <action name ="MoveResizeTo">
-      <x>0</x>
-      <y>0</y>
-      <width>1024</width>
-      <height>568</height>
-    </action>
-  </keybind>
-  <keybind key="W-l">
-    <action name="Execute">
-      <command>xdg-screensaver lock</command>
-    </action>
-  </keybind>
-  <keybind key="W-d">
-    <!--
+    <keybind key="W-Left">
+      <action name="SendToDesktopLeft">
+        <dialog>no</dialog>
+        <wrap>no</wrap>
+      </action>
+    </keybind>
+    <keybind key="W-Right">
+      <action name="SendToDesktopRight">
+        <dialog>no</dialog>
+        <wrap>no</wrap>
+      </action>
+    </keybind>
+    <keybind key="W-Up">
+      <action name="SendToDesktopUp">
+        <dialog>no</dialog>
+        <wrap>no</wrap>
+      </action>
+    </keybind>
+    <keybind key="W-Down">
+      <action name="SendToDesktopDown">
+        <dialog>no</dialog>
+        <wrap>no</wrap>
+      </action>
+    </keybind>
+    <keybind key="W-F1">
+      <action name="Desktop">
+        <desktop>1</desktop>
+      </action>
+      <action name="Execute">
+        <command>pactl set-sink-mute 0 toggle</command>
+      </action>
+    </keybind>
+    <keybind key="KP_Insert">
+      <action name="Execute">
+        <command>pactl set-sink-mute 0 toggle</command>
+      </action>
+    </keybind>
+    <keybind key="W-F2">
+      <action name="Desktop">
+        <desktop>2</desktop>
+      </action>
+    </keybind>
+    <keybind key="W-F3">
+      <action name="Desktop">
+        <desktop>3</desktop>
+      </action>
+    </keybind>
+    <keybind key="W-F4">
+      <action name="Desktop">
+        <desktop>4</desktop>
+      </action>
+    </keybind>
+    <keybind key="W-F8">
+      <action name="ToggleAlwaysOnTop"/>
+    </keybind>
+    <keybind key="W-f">
+      <action name="ToggleMaximize"/>
+      <!-- <action name="UnmaximizeFull"/> -->
+      <!-- <action name="MaximizeVert"/> -->
+      <action name="MoveResizeTo">
+        <x>0</x>
+        <y>0</y>
+        <width>1024</width>
+        <height>568</height>
+      </action>
+    </keybind>
+    <keybind key="W-l">
+      <action name="Execute">
+        <command>xdg-screensaver lock</command>
+      </action>
+    </keybind>
+    <keybind key="W-d">
+      <!--
         <action name="ToggleShowDesktop"/>
         </keybind>
         <keybind key="C-A-d">
     -->
-    <action name="If">
-      <desktop>4</desktop>
-      <then>
-        <action name="GoToDesktop">
-          <to>last</to>
-        </action>
-      </then>
-      <else>
-        <action name="GoToDesktop">
-          <to>4</to>
-        </action>
-      </else>
-    </action>
-  </keybind>
-  <keybind key="W-o">
-    <action name="GoToDesktop">
-      <to>last</to>
-    </action>
-  </keybind>
-  <keybind key="W-j">
-    <action name="GoToDesktop">
-      <to>previous</to>
-    </action>
-  </keybind>
-  <keybind key="W-k">
-    <action name="GoToDesktop">
-      <to>next</to>
-    </action>
-  </keybind>
+      <action name="If">
+        <desktop>4</desktop>
+        <then>
+          <action name="GoToDesktop">
+            <to>last</to>
+          </action>
+        </then>
+        <else>
+          <action name="GoToDesktop">
+            <to>4</to>
+          </action>
+        </else>
+      </action>
+    </keybind>
+    <keybind key="W-o">
+      <action name="GoToDesktop">
+        <to>last</to>
+      </action>
+    </keybind>
+    <keybind key="W-j">
+      <action name="GoToDesktop">
+        <to>previous</to>
+      </action>
+    </keybind>
+    <keybind key="W-k">
+      <action name="GoToDesktop">
+        <to>next</to>
+      </action>
+    </keybind>
     <!-- Keybindings for windows -->
     <keybind key="A-F4 W-h">
-    <action name="If">
-      <title>* - nsvm</title>
-      <then><!-- Do nothing for foo --></then>
-      <else>
-        <action name="Close" />
-      </else>
-    </action>
+      <action name="If">
+        <title>* - nsvm</title>
+        <then>
+          <!-- Do nothing for foo -->
+        </then>
+        <else>
+          <action name="Close"/>
+        </else>
+      </action>
     </keybind>
     <keybind key="A-Escape">
       <action name="Lower"/>
@@ -365,10 +367,10 @@
       </action>
     </keybind>
     <!-- Keybindings for window switching -->
-  <!--
+    <!--
     <keybind key="A-Tab">
   -->
-  <keybind key="W-n">
+    <keybind key="W-n">
       <action name="NextWindow">
         <finalactions>
           <action name="Focus"/>
@@ -378,10 +380,10 @@
         <allDesktops>no</allDesktops>
       </action>
     </keybind>
-  <!--
+    <!--
     <keybind key="A-S-Tab">
   -->
-  <keybind key="W-p">
+    <keybind key="W-p">
       <action name="PreviousWindow">
         <finalactions>
           <action name="Focus"/>
@@ -392,7 +394,7 @@
       </action>
     </keybind>
     <!-- Keybindings for window switching with the arrow keys -->
-  <!--
+    <!--
     <keybind key="A-S-Right">
       <action name="DirectionalCycleWindows">
         <direction>right</direction>
@@ -414,70 +416,68 @@
       </action>
     </keybind>
   -->
-
-  <!-- Keybindings for running applications -->
-  <keybind key="W-e">
-    <action name="Execute">
-      <startupnotify>
-        <enabled>true</enabled>
-        <name>PCManFM</name>
-      </startupnotify>
-      <!--
+    <!-- Keybindings for running applications -->
+    <keybind key="W-e">
+      <action name="Execute">
+        <startupnotify>
+          <enabled>true</enabled>
+          <name>PCManFM</name>
+        </startupnotify>
+        <!--
       <command>lxsession-default file_manager</command>
       -->
-      <command>pcmanfm-qt</command>
-    </action>
-  </keybind>
-  <!--keybindings for LXPanel -->
-  <keybind key="W-u">
-    <action name="Execute">
-      <!--
+        <command>pcmanfm-qt</command>
+      </action>
+    </keybind>
+    <!--keybindings for LXPanel -->
+    <keybind key="W-u">
+      <action name="Execute">
+        <!--
       <command>lxsession-default launcher</command>
       -->
-      <!--
+        <!--
       <command>lxqt-runner</command>
       -->
-      <command>qterminal -d</command>
-    </action>
-  </keybind>
-  <keybind key="A-F2">
-    <action name="Execute">
-      <!--
+        <command>qterminal -d</command>
+      </action>
+    </keybind>
+    <keybind key="A-F2">
+      <action name="Execute">
+        <!--
       <command>lxsession-default launcher</command>
       -->
-      <!--
+        <!--
       <command>lxqt-runner</command>
       -->
-      <command>qterminal -d</command>
-    </action>
-  </keybind>
-  <!--
+        <command>qterminal -d</command>
+      </action>
+    </keybind>
+    <!--
   <keybind key="C-Escape">
     <action name="Execute">
       <command>lxpanelctl menu</command>
     </action>
   </keybind>
   -->
-
     <!-- Keybindings to toggle fullscreen -->
     <keybind key="F11">
       <action name="ToggleFullscreen"/>
     </keybind>
-  <keybind key="Print">
-    <action name="Execute">
-      <command>scrot --silent '%Y%m%d_%H%M%S_$wx$h.png'</command>
-    </action>
-  </keybind>
-  <keybind key="A-Print">
-    <action name="Execute">
-      <command>scrot --silent --focused '%Y%m%d_%H%M%S_$wx$h.png'</command>
-    </action>
-  </keybind>
-  <keybind key="C-Print">
-    <action name="Execute">
-      <command>scrot --select --silent '%Y%m%d_%H%M%S_$wx$h.png'</command>
-    </action>
-  </keybind>
+    <keybind key="Print">
+      <action name="Execute">
+        <command>scrot --silent '%Y%m%d_%H%M%S_$wx$h.png'</command>
+      </action>
+    </keybind>
+    <keybind key="A-Print">
+      <action name="Execute">
+        <command>scrot --silent --focused '%Y%m%d_%H%M%S_$wx$h.png'</command>
+      </action>
+    </keybind>
+    <keybind key="C-Print">
+      <action name="Execute">
+        <command>scrot --select --silent '%Y%m%d_%H%M%S_$wx$h.png'</command>
+      </action>
+    </keybind>
   </keyboard>
   <mouse>
     <!--
@@ -942,24 +942,24 @@
 
   # end of the example
 -->
-  <application name="emacs">
-    <decor>no</decor>
-  </application>
-  <application name="emacs-server">
-    <desktop>all</desktop>
-    <decor>no</decor>
-  </application>
-  <application class="Conky">
-    <desktop>4</desktop>
-    <maximized>true</maximized>
-    <!-- <fullscreen>yes</fullscreen> -->
-  </application>
-  <application name="qterminal">
-    <!--
+    <application name="emacs">
+      <decor>no</decor>
+    </application>
+    <application name="emacs-server">
+      <desktop>all</desktop>
+      <decor>no</decor>
+    </application>
+    <application class="Conky">
+      <desktop>4</desktop>
+      <maximized>true</maximized>
+      <!-- <fullscreen>yes</fullscreen> -->
+    </application>
+    <application name="qterminal">
+      <!--
         <decor>no</decor>
     -->
-    <maximized>yes</maximized>
-  </application>
+      <maximized>yes</maximized>
+    </application>
     <!-- Option to maximize all normal window when launched-->
     <!--
   <application type="normal">
