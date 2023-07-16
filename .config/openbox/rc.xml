@@ -960,6 +960,12 @@
     -->
       <maximized>yes</maximized>
     </application>
+    <application name="evince">
+      <maximized>yes</maximized>
+    </application>
+    <application name="qpdfview">
+      <maximized>yes</maximized>
+    </application>
     <!-- Option to maximize all normal window when launched-->
     <!--
   <application type="normal">
