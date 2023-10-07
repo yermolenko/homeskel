@@ -931,6 +931,12 @@
 -->
       <maximized>yes</maximized>
     </application>
+    <application name="evince">
+      <maximized>yes</maximized>
+    </application>
+    <application name="qpdfview">
+      <maximized>yes</maximized>
+    </application>
     <!--
 
     <application name="Navigator" class="Iceweasel*">
