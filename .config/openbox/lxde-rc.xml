@@ -364,7 +364,8 @@
     <!--keybindings for LXPanel -->
     <keybind key="W-u">
       <action name="Execute">
-        <command>lxpanelctl run</command>
+        <!-- <command>lxpanelctl run</command> -->
+        <command>dmenu_run -fn 'DejaVu Sans Mono:size=25' -l 20</command>
       </action>
     </keybind>
     <keybind key="A-F2">
