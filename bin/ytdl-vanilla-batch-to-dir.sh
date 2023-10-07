@@ -1,6 +1,7 @@
 #!/bin/bash
 #
-#  ytdl-batch-to-dir - convenient downloading of videos
+#  ytdl-vanilla-batch-to-dir - convenient downloading of videos using
+#  built-in batch file capability of youtube-dl
 #
 #  Copyright (C) 2014, 2017, 2021, 2022, 2023 Alexander Yermolenko
 #  <yaa.mbox@gmail.com>
