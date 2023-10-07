@@ -106,7 +106,14 @@ var_is_declared proxy && echo "proxy: $proxy"
 # fi
 echo "audio_only: $audio_only"
 echo "hd: $hd"
+
+[ -f "$batch_file" ] || die "Cannot read batch_file: $batch_file"
+batch_file="$(cd "$(dirname -- "$batch_file")" >/dev/null; pwd -P)/$(basename -- "$batch_file")"
+[ -f "$batch_file" ] || die "Cannot read batch_file: $batch_file"
 echo "batch_file: $batch_file"
+
+mkdir -p "$output_dir" > /dev/null 2>&1
+output_dir="$(cd "$(dirname -- "$output_dir")" >/dev/null; pwd -P)/$(basename -- "$output_dir")"
 echo "output_dir: $output_dir"
 
 [ $audio_only -eq 1 ] && require ffmpeg
@@ -117,9 +124,6 @@ ytdl_executable=./youtube-dl
 
 echo "ytdl_executable: $ytdl_executable"
 
-[ -f "$batch_file" ] || die "Cannot read batch_file: $batch_file"
-
-mkdir -p "$output_dir" > /dev/null 2>&1
 mkdir -p "$output_dir/.cache" > /dev/null 2>&1
 
 cd "$output_dir" || die "Cannot cd to the directory"
