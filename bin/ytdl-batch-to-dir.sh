@@ -74,17 +74,20 @@ min_free_disk_space=1000000
 
 usage()
 {
-    echo "usage: $0 [--audio-only] [--hd] [--max-duration <seconds>] [--interactive] [[--use-tor] | [--proxy <proxy>]] ytdl_batch_file [output_dir]"
+    echo "usage: $0 [[--audio-only] | [--hd] | [--worst]] [--max-duration <seconds>] [--interactive] [[--use-tor] | [--proxy <proxy>]] ytdl_batch_file [output_dir]"
 }
 
 audio_only=0
+sd=0
 hd=0
+worst=0
 max_duration=5832
 interactive=0
 
 while [ "$1" != "" ]; do
     [[ "$1" == --audio-only ]] && audio_only=1 && shift && continue
     [[ "$1" == --hd ]] && hd=1 && shift && continue
+    [[ "$1" == --worst ]] && worst=1 && shift && continue
     [[ "$1" == --max-duration ]] && shift && max_duration="${1:?Bad duration specification}" && shift && continue
     [[ "$1" == --interactive ]] && interactive=1 && shift && continue
     [[ "$1" == --use-tor ]] && proxy=socks5://127.0.0.1:9050/ && shift && continue
@@ -107,8 +110,14 @@ var_is_declared proxy && echo "proxy: $proxy"
 # then
 #     echo "proxy: $proxy"
 # fi
+
+[ $(( audio_only + sd + hd + worst )) -gt 1 ] && die "Ambiguous output format specification"
+[ $(( audio_only + sd + hd + worst )) -eq 0 ] && sd=1
 echo "audio_only: $audio_only"
+echo "sd: $sd"
 echo "hd: $hd"
+echo "worst: $worst"
+
 echo "max_duration: $max_duration"
 echo "interactive: $interactive"
 
@@ -215,12 +224,13 @@ do
 
     ytdl_command=("${ytdl_command_base[@]}")
     [ $audio_only -eq 1 ] && \
-        ytdl_command+=(--extract-audio --audio-format mp3 --audio-quality 256K) || \
-            {
-                [ $hd -eq 1 ] && \
-                    ytdl_command+=(--format 'mp4[height<=720]/bestvideo[height<=720]+mp4/bestaudio/best') || \
-                        ytdl_command+=(--format 'mp4[height<=480]/bestvideo[height<=480]+mp4/bestaudio/best')
-            }
+        ytdl_command+=(--extract-audio --audio-format mp3 --audio-quality 256K)
+    [ $hd -eq 1 ] && \
+        ytdl_command+=(--format 'mp4[height<=720]/bestvideo[height<=720]+mp4/bestaudio/best')
+    [ $sd -eq 1 ] && \
+        ytdl_command+=(--format 'mp4[height<=480]/bestvideo[height<=480]+mp4/bestaudio/best')
+    [ $worst -eq 1 ] && \
+        ytdl_command+=(-S +size,+br,+res,+fps)
     ytdl_command+=(--output "%(upload_date)s-%(id)s.mp4")
     ytdl_command+=(--restrict-filenames)
     ytdl_command+=(--write-description)
