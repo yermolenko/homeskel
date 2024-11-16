@@ -888,6 +888,10 @@ This works on the current region."
         (goto-char (point-min))
         (while (re-search-forward "\\([[:alpha:]]\\{3\\}\\)[[:blank:]]\\{1,2\\}\\([[:alpha:]]\\{1,1\\}\\)\\." nil t)
           (replace-match "\\1 \\2."))
+        ;; ЗАО «ABC»
+        (goto-char (point-min))
+        (while (re-search-forward "\\(^\\|[[:blank:]]+\\)\\([[:alpha:]]\\{1,3\\}\\)[[:blank:]]\\{0,2\\}\\([\"«]\\)" nil t)
+          (replace-match "\\1\\2 \\3"))
         ;; years and pages
         (goto-char (point-min))
         (while (re-search-forward "\\([[:digit:]]\\{1\\}\\)[[:blank:]]\\{1,2\\}\\(р\\|року\\|році\\|рр\\|с\\|pp\\|p\\)\\{1,1\\}\\(\\.\\|[[:blank:]]\\|$\\)\\{1,1\\}" nil t)
@@ -921,6 +925,21 @@ This works on the current region."
   "Make HTML look nicer in a whole buffer."
   (interactive)
   (yaahtml-prettify-region (point-min) (point-max)))
+
+(defun yaahtml-prettify-complex-table-data-region (begin end)
+  "Make complex HTML table data look nicer."
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region begin end)
+      (let ((case-fold-search t))
+        ;; (goto-char (point-min))
+        ;; (while (re-search-forward "\\([[:space:]-]+[[:digit:]]+\\)[[:space:]]+\\([[:alpha:]]+\\)" nil t)
+        ;;   (replace-match "\\1<br />\n\\2"))
+        (goto-char (point-min))
+        (while (re-search-forward "<td\\(.*\\)>\\([[:digit:]]?\\)</td>" nil t)
+          (replace-match "<th\\1>\\2</th>"))
+        ))))
 
 ;; --------------------
 
