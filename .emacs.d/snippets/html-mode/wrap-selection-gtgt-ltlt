@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# binding: C-c C-c g t l t
+# --
+&gt;&gt; `(if (region-active-p) (yas-selected-text) "")` &lt;&lt;$0

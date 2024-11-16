@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# key: tghash
+# --
+<a rel="noopener nofollow noreferrer" target="_blank" title="#${1:hashtag} search" href="tg://search_hashtag?hashtag=$1">#$1</a>$0

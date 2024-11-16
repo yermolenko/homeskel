@@ -2,7 +2,11 @@
 # group: links
 # key: lfilewp
 # --
-<a href="${1:$$(
+<a${8:$$(
+yas-choose-value '("" " rel=\\"noopener nofollow noreferrer\\"")
+)}${9:$$(
+yas-choose-value '("" " target=\\"_blank\\"")
+)} href="${1:$$(
 yas-choose-value '("/uploads/" "/uploads/news/" "/sites/default/files/konf/")
 )}${2:filename.pdf}" title="$2 (${3:0} ${4:$$(
 yas-choose-value '("КБ" "МБ" "Б")

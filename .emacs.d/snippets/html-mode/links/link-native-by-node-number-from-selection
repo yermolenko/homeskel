@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# group: links
-# binding: C-c C-c m n
-# --
-<a title="${3:Перейти за посиланням}" href="/?q=node/${1:NODE_NUMBER}">${1:`(if (region-active-p) (yas-selected-text) "")`}</a>$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: profiles
+# binding: C-c C-c m r d
+# --
+<a rel="nofollow noreferrer" title="Переглянути публікацію" target="_blank" href="https://doi.org/$1">${1:`(if (region-active-p) (yas-selected-text) "")`}</a>$0

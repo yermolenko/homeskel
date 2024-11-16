@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# group: links
+# binding: C-c C-c m n
+# --
+<a${8:$$(
+yas-choose-value '("" " rel=\\"noopener nofollow noreferrer\\"" " rel=\\"noopener nofollow\\"")
+)}${9:$$(
+yas-choose-value '("" " target=\\"_blank\\"")
+)} title="${3:Перейти за посиланням}" href="/?q=node/${1:NODE_NUMBER}">${1:`(if (region-active-p) (yas-selected-text) "")`}</a>$0

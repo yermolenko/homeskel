@@ -2,4 +2,6 @@
 # group: links
 # key: lnn
 # --
-<a title="${3:Перейти за посиланням}" href="/?q=node/${1:NODE_NUMBER}">${2:TEXT}</a>$0
+<a${9:$$(
+yas-choose-value '("" " target=\\"_blank\\"")
+)} title="${3:Перейти за посиланням}" href="/?q=node/${1:NODE_NUMBER}">${2:TEXT}</a>$0

@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# key: igg
+# --
+<hr />
+<!-- gallery of ${1:10} images: type=${2:jpg} width=${3:700} id=${4:deptname_20YYMMDD_eventname} path_with_basename=${5:$$(
+yas-choose-value '("/sites/default/files/konf/img" "/uploads/deptname/2024mmdd/img")
+)} thumb_suffix=${6:$$(
+yas-choose-value '("-thumb" "")
+)} -->
+<p> </p>
+${:$$(
+let (
+    (value "")
+    (count (string-to-number (or (yas-field-value 1) "0")))
+    (type (yas-field-value 2))
+    (width (yas-field-value 3))
+    (id (yas-field-value 4))
+    (path_with_basename (yas-field-value 5))
+    (thumb_suffix (yas-field-value 6))
+    )
+  (dotimes (index count)
+    (setq value (concat
+                 value
+                 (format "<p align=\\"center\\"><a href=\\"%s-%03d.%s\\" rel=\\"lightbox[ig-%s]\\" target=\\"_blank\\" title=\\"Збільшити зображення\\"><img alt=\\"Зображення\\" src=\\"%s-%03d%s.%s\\" style=\\"float: none; align: center;\\" title=\\"Збільшити зображення\\" width=\\"%s\\" /></a></p>\\n"
+                 path_with_basename (+ index 1) type id path_with_basename (+ index 1) thumb_suffix type width))))
+  value
+)}<p> </p>
+$0

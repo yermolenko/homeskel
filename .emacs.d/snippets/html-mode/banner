@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key: banner
+# --
+<p align="center"><img alt="Banner" src="${1:/uploads/dept_xyz/banner.png}" style="float: none; align: center;" width="700" /></p>
+$0

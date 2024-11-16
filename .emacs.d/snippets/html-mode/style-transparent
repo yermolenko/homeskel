@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# key: stt
+# --
+style="color: rgba(0, 0, 0, 0.0);"$0

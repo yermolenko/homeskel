@@ -2,7 +2,11 @@
 # group: links
 # key: lfile
 # --
-<a href="${1:/uploads/filename.pdf}" title="${1:$(
+<a${8:$$(
+yas-choose-value '("" " rel=\\"noopener nofollow noreferrer\\"")
+)}${9:$$(
+yas-choose-value '("" " target=\\"_blank\\"")
+)} href="${1:/uploads/filename.pdf}" title="${1:$(
 let ((uploads-relative-filename
       (car (last (split-string yas-text "/uploads/")))))
        (file-name-nondirectory uploads-relative-filename)

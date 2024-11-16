@@ -1,4 +1,4 @@
 # -*- mode: snippet -*-
 # key: stlf
 # --
- style="table-layout:fixed;"$0
+style="table-layout:fixed;"$0

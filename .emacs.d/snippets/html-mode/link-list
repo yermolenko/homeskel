@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# key: ll
+# --
+<!-- list of ${1:10} links: basename=${2:oholoshennia} path=${3:/sites/default/files/konf/} basetitle=${4:Оголошення} -->
+${:$$(
+let (
+    (value "")
+    (count (string-to-number (or (yas-field-value 1) "0")))
+    (basename (yas-field-value 2))
+    (path (yas-field-value 3))
+    (basetitle (yas-field-value 4))
+    )
+  (dotimes (index count)
+    (setq value (concat
+                 value
+                 (format "<li><a href=\\"%s%s_%03d.pdf\\" target=\\"_blank\\" title=\\"%s_%03d.pdf\\">%s %03d</a></li>\\n"
+                 path basename (+ index 1) basename (+ index 1) basetitle (+ index 1) ))))
+  value
+)}
+$0

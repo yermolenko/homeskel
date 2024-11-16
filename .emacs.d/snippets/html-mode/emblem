@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# key: emblem
+# --
+<p><a href="${1:/uploads/dept_xyz/emblem.png}" rel="lightbox[emblem]" target="_blank" title="Збільшити зображення"><img alt="Емблема" src="$1" style="float: left;" title="Емблема" width="380" /></a></p>
+<p> </p>
+$0

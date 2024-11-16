@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key: yt-start-end
+# --
+<p style="text-align:center;"><iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="405" src="https://www.youtube.com/embed/${1:YoUtUbEId}?rel=0&start=${2:1}&end=${3:100}" width="720"></iframe></p>
+$0
