@@ -943,6 +943,21 @@ This works on the current region."
 
 ;; --------------------
 
+(defun yaa-remove-comments-region (begin end)
+  "Remove comments from the region."
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region begin end)
+      ;; (goto-char (point-min))
+      ;; (comment-kill (count-lines (point-min) (point-max)))
+      (goto-char (point-min))
+      (let (kill-ring)
+        (comment-kill (count-lines (point-min) (point-max))))
+      )))
+
+;; --------------------
+
 (defun yaref-cpp ()
   "Browse local cppreference"
   (interactive)
