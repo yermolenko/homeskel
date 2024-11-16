@@ -463,3 +463,5 @@
 ;; --------------------
 
 (yaa-toggle-fullscreen)
+
+(set-face-attribute 'region nil :background "#666" :foreground "#ffffff")
