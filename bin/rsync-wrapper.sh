@@ -80,7 +80,7 @@ if flag_is_set ntfs_friendly_rsync;
 then
     rsync_command+=(-rltDixv)
 else
-    rsync_command+=(-aHAXixv)
+    rsync_command+=(-aHAXSixv)
 fi
 
 flag_is_set test && \
