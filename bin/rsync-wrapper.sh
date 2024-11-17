@@ -92,6 +92,9 @@ flag_is_set numeric_ids && \
     rsync_command+=(--numeric-ids)
 flag_is_set update && \
     rsync_command+=(--update)
+[ -f ./rsync-wrapper-excludes ] && \
+    rsync_command+=(--exclude-from=./rsync-wrapper-excludes) && \
+    info "./rsync-wrapper-excludes exists, using it"
 rsync_command+=(--bwlimit="$rsync_bwlimit")
 rsync_command+=(--)
 rsync_command+=("$src")
