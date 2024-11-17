@@ -2,8 +2,8 @@
 #
 #  yaa-ssh-tricks - various ssh-based tricks
 #
-#  Copyright (C) 2010, 2013, 2019, 2020, 2021, 2022, 2023 Alexander
-#  Yermolenko <yaa.mbox@gmail.com>
+#  Copyright (C) 2010, 2013, 2019, 2020, 2021, 2022, 2023, 2024
+#  Alexander Yermolenko <yaa.mbox@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -338,6 +338,48 @@ local_port_forwarding_setup_from_config()
         info "Read from config: local_port: $local_port, remote_port: $remote_port"
         local_port_forwarding_setup $local_port $remote_port
     done
+}
+
+local_port_forwarding_setup_from_config_single_connection()
+{
+    require_var local_port_forwarding_pairs
+
+    prohibit_using_virtual_host_config
+
+    local lpf_ssh_options=()
+
+    for port_fwd_pair in "${local_port_forwarding_pairs[@]}" ; do
+        local_port=${port_fwd_pair%%:*}
+        remote_port=${port_fwd_pair#*:}
+        info "Read from config: local_port: $local_port, remote_port: $remote_port"
+
+        lpf_ssh_options+=(-L $local_port:127.0.0.1:$remote_port)
+    done
+
+    require_var host
+    require_var user
+    require_var ssh_port
+
+    require ssh
+
+    prohibit_using_virtual_host_config
+
+    ssh_control_sockets_list_file=${1:-./local_port_forwarding.ssh_control_sockets}
+
+    tempdir=$( mktemp -d )
+
+    info "Preparing port forwarding ..."
+
+    socket_file_name="$tempdir/.ssh-${host:${#host}<15?0:-15}-lpf-multiple"
+
+    ssh -S "$socket_file_name" -M \
+        -C -N -f -p $ssh_port \
+        "${extra_ssh_options[@]}" -o ExitOnForwardFailure=yes \
+        "${lpf_ssh_options[@]}" \
+        "$user@$host" \
+        > "$socket_file_name.stdout" 2> "$socket_file_name.stderr" || info "$(timestamp): ssh lpf setup call failed"
+
+    echo "$socket_file_name" >> "$ssh_control_sockets_list_file"
 }
 
 local_port_forwarding_remove()
