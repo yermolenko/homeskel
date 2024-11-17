@@ -3,7 +3,8 @@
 #  rsync-wrapper.sh - copy files, directories or directory structures
 #  using rsync
 #
-#  Copyright (C) 2022, 2023 Alexander Yermolenko <yaa.mbox@gmail.com>
+#  Copyright (C) 2022, 2023, 2024 Alexander Yermolenko
+#  <yaa.mbox@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,6 +26,9 @@ source "$scriptdir/yaa-tools.sh" 2>/dev/null || \
 date=`date "+%Y%m%d-%H%M%S"`
 
 require rsync
+
+rsync_bwlimit="10000"
+rsync_bwlimit="0"
 
 usage()
 {
@@ -88,6 +92,7 @@ flag_is_set numeric_ids && \
     rsync_command+=(--numeric-ids)
 flag_is_set update && \
     rsync_command+=(--update)
+rsync_command+=(--bwlimit="$rsync_bwlimit")
 rsync_command+=(--)
 rsync_command+=("$src")
 rsync_command+=("$dest")
