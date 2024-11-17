@@ -2,7 +2,7 @@
 #
 #  yaa-text-tools.sh - various text manipulation tools
 #
-#  Copyright (C) 2021, 2022, 2023 Alexander Yermolenko
+#  Copyright (C) 2021, 2022, 2023, 2024 Alexander Yermolenko
 #  <yaa.mbox@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -98,7 +98,7 @@ sanitize_for_pretty_filename()
 
 sanitize_for_m3u_title()
 {
-    sed -e "s/[^ _a-zA-Zа-яА-Я0-9\,\.\-]//g" -e 's/ \+/ /'
+    LANG=en_US.UTF-8 sed -e "s/[^ _a-zA-Zа-яА-Я0-9\,\.\-]//g" -e 's/ \+/ /'
 }
 
 urlencode()
