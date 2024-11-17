@@ -23,7 +23,13 @@ require setxkbmap
 
 kb_reset()
 {
+    s2cctl stop 2>/dev/null
+
+    sleep 1
+
     killall xcape 2>/dev/null
+
+    sleep 1
 
     setxkbmap \
         -model pc105 \
@@ -37,7 +43,7 @@ kb_reset()
 # Make the space bar work as an additional ctrl key when held
 # See man 1 xcape for details
 #
-space_as_control()
+space_as_control_using_xcape()
 {
     require xmodmap
     require xcape
@@ -55,12 +61,33 @@ space_as_control()
     xcape -e "$spare_modifier=space"
 }
 
+space_as_control_using_s2c()
+{
+    s2cctl stop
+    sleep 1
+    s2cctl start
+}
+
+space_as_control()
+{
+    hash "s2cctl" >/dev/null 2>&1 && \
+        space_as_control_using_s2c || space_as_control_using_xcape
+}
+
 kb_us_ru()
 {
     setxkbmap \
         -layout "us,ru" \
         -variant "," \
         -option "grp:shifts_toggle,compose:menu,lv3:rwin_switch,ctrl:nocaps"
+}
+
+kb_us()
+{
+    setxkbmap \
+        -model pc105 \
+        -layout us \
+        -option 'ctrl:nocaps'
 }
 
 kb_us_altgr_intl()
