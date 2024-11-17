@@ -6,11 +6,15 @@ ssh_port=22
 #ssh_password_file=./you_should_not_store_passwords_in_a_file
 
 #extra_ssh_options+=(-o ConnectTimeout=15)
+#extra_ssh_options+=(-o Compression=yes)
 #extra_ssh_options+=(-C)
 #extra_ssh_options+=(-o UserKnownHostsFile=./known_hosts)
 #extra_ssh_options+=(-i ./privkey)
 #extra_ssh_options+=(-o FingerprintHash=md5)
 #extra_ssh_options+=(-o PubkeyAcceptedKeyTypes=+ssh-rsa)
+#extra_ssh_options+=(-o HostKeyAlgorithms=+ssh-rsa)
+#extra_ssh_options+=(-o KexAlgorithms=+diffie-hellman-group1-sha1)
+#extra_ssh_options+=(-o Ciphers=+aes256-cbc)
 #extra_ssh_options+=(-vvv)
 #extra_ssh_options+=(-o PubkeyAuthentication=no)
 #extra_ssh_options+=(-o PreferredAuthentications=password -o PubkeyAuthentication=no)
@@ -30,6 +34,8 @@ sshfs_remote_root="/"
 #extra_sshfs_options+=(-o Cipher=arcfour)
 #extra_sshfs_options+=(-o uid=1000,gid=1000,umask=022)
 #extra_sshfs_options+=(-o ssh_command='ssh -J user@jumphost:22')
+#extra_sshfs_options+=(-o sftp_server="/usr/local/bin/sudo -u root /usr/libexec/sftp-server")
+#extra_sshfs_options+=(-o sftp_server="su -m root -c '/usr/libexec/sftp-server'")
 
 #local_port_forwarding_pairs+=(18384:8384)
 #local_port_forwarding_pairs+=(13306:3306)
