@@ -96,6 +96,7 @@ flag_is_set update && \
     rsync_command+=(--exclude-from=./rsync-wrapper-excludes) && \
     info "./rsync-wrapper-excludes exists, using it"
 rsync_command+=(--bwlimit="$rsync_bwlimit")
+# rsync_command+=(--compress)
 rsync_command+=(--)
 rsync_command+=("$src")
 rsync_command+=("$dest")
