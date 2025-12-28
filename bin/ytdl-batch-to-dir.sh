@@ -93,6 +93,7 @@ max_duration=5832
 interactive=0
 
 huge_duration=100000
+short_duration=300
 
 while [ "$1" != "" ]; do
     [[ "$1" == --audio-only ]] && audio_only=1 && shift && continue
@@ -245,9 +246,14 @@ do
     [ $audio_only -eq 1 ] && \
         ytdl_command+=(--extract-audio --audio-format mp3 --audio-quality 256K)
     [ $hd -eq 1 ] && \
-        ytdl_command+=(--format 'mp4[height<=720]/bestvideo[height<=720]+mp4/bestaudio/best')
+        ytdl_command+=(--format 'bestvideo*+bestaudio/best')
     [ $sd -eq 1 ] && \
-        ytdl_command+=(--format 'mp4[height<=480]/bestvideo[height<=480]+mp4/bestaudio/best')
+        {
+            [ $duration -lt $short_duration ] && \
+                info "Forcing HD for the short video" && \
+                ytdl_command+=(--format 'bestvideo*+bestaudio/best') || \
+                    ytdl_command+=(--format 'mp4[height<=480]/bestvideo[height<=480]+mp4/bestaudio/best')
+        }
     [ $worst -eq 1 ] && \
         ytdl_command+=(-S +size,+br,+res,+fps)
     ytdl_command+=(--output "%(upload_date)s-%(id)s.mp4")
