@@ -242,6 +242,12 @@ do
     printf "==========\n%s\n" "$url" >> "$stdout_file"
     printf "==========\n%s\n" "$url" >> "$stderr_file"
 
+    # ytdl_command_array_length="${#ytdl_command[@]}"
+    # info "ytdl_command array length: $ytdl_command_array_length"
+    # for (( i=0; i<$ytdl_command_array_length; i++ )); do
+    #     info "ytdl_command[$i]: ${ytdl_command[$i]}"
+    # done
+
     sleep 5
 
     "${ytdl_command[@]}" \
