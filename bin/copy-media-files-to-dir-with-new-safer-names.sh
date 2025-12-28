@@ -4,7 +4,7 @@
 #  recursively found multimedia files with renaming for better
 #  compatibility with various devices and filesystems
 #
-#  Copyright (C) 2014, 2017, 2021, 2022, 2023 Alexander Yermolenko
+#  Copyright (C) 2014, 2017, 2021, 2022, 2023, 2025 Alexander Yermolenko
 #  <yaa.mbox@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -91,6 +91,7 @@ do
 
     # special case for ytdl downloads
     info_json_file="${videofile%.mp4}.info.json"
+    [ -f "$info_json_file" ] || info_json_file="${videofile%.mp3}.info.json"
     [ -f "$info_json_file" ] && \
         title_from_info_json=$(jq -r ".title" "$info_json_file") && \
         upload_date_from_info_json=$(jq -r ".upload_date" "$info_json_file") && \
