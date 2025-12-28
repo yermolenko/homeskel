@@ -92,6 +92,8 @@ worst=0
 max_duration=5832
 interactive=0
 
+huge_duration=100000
+
 while [ "$1" != "" ]; do
     [[ "$1" == --audio-only ]] && audio_only=1 && shift && continue
     [[ "$1" == --hd ]] && hd=1 && shift && continue
@@ -126,7 +128,7 @@ echo "sd: $sd"
 echo "hd: $hd"
 echo "worst: $worst"
 
-echo "max_duration: $max_duration"
+echo "max_duration: $max_duration (set to 0 to disable duration check)"
 echo "interactive: $interactive"
 
 [ -f "$batch_file" ] || die "Cannot read batch_file: $batch_file"
@@ -190,34 +192,39 @@ ytdl_command_base+=(--no-playlist)
 
 for url in "${urls[@]}"
 do
-    ytdl_command_get_info=("${ytdl_command_base[@]}")
-    ytdl_command_get_info+=(--simulate)
-    ytdl_command_get_info+=(--print duration)
-    ytdl_command_get_info+=(--print title)
+    if [ "$max_duration" -gt 0 ]; then
+        ytdl_command_get_info=("${ytdl_command_base[@]}")
+        ytdl_command_get_info+=(--simulate)
+        ytdl_command_get_info+=(--print duration)
+        ytdl_command_get_info+=(--print title)
 
-    ytdl_command_get_info+=(-- "$url")
+        ytdl_command_get_info+=(-- "$url")
 
-    sleep 5
+        sleep 5
 
-    {
-        read -r duration && read -r title || \
-                {
-                    info "read exit code: $?"
-                    printf "%s\n" "$url" >> "$failed_downloads_file"
-                    duration=100000
-                    continue
-                }
-    } < <("${ytdl_command_get_info[@]}")
-
-    info "$url duration: $duration"
-    info "$url title: $title"
-
-    [ $duration -gt "$max_duration" ] && \
         {
-            info "The video \"$url\" is too long. Excluding"
-            printf "%s\n" "$url" >> "$excluded_downloads_file"
-            continue
-        }
+            read -r duration && read -r title || \
+                    {
+                        info "read exit code: $?"
+                        printf "%s\n" "$url" >> "$failed_downloads_file"
+                        duration="$huge_duration"
+                        continue
+                    }
+        } < <("${ytdl_command_get_info[@]}")
+
+        info "$url duration: $duration"
+        info "$url title: $title"
+
+        [ $duration -gt "$max_duration" ] && \
+            {
+                info "The video \"$url\" is too long. Excluding"
+                printf "%s\n" "$url" >> "$excluded_downloads_file"
+                continue
+            }
+    else
+        info "$url duration: undefined"
+        duration="$huge_duration"
+    fi
 
     [ $interactive -eq 1 ] && \
         {
