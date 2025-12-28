@@ -241,7 +241,6 @@ do
     ytdl_command+=(--restrict-filenames)
     ytdl_command+=(--write-description)
     ytdl_command+=(--write-info-json)
-    ytdl_command+=(--write-annotations)
 
     ytdl_command+=(-- "$url")
 
