@@ -9,3 +9,5 @@ archive_filename=${2:-./`basename "$item"`.zip}
 [ -e "$archive_filename.zip" ] && { echo "ERROR: Destination already exists"; exit 1; }
 
 zip -r "$archive_filename" "$item" || echo "ERROR: Something went wrong"
+
+sync --file-system "$archive_filename"
