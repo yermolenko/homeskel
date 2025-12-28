@@ -80,7 +80,7 @@ min_free_disk_space=1000000
 
 usage()
 {
-    echo "usage: $0 [[--audio-only] | [--hd] | [--worst]] [--max-duration <seconds>] [--interactive] [[--use-tor] | [--proxy <proxy>]] ytdl_batch_file [output_dir]"
+    echo "usage: $0 [[--audio-only] | [--hd] | [--worst]] [--max-duration <seconds>] [--interactive] [[--use-tor] | [--proxy <proxy>]] [[--use-cookies-from-browser] | [--use-cookies-from-file <cookies-file>]] ytdl_batch_file [output_dir]"
 }
 
 download_archive_file="ytdl-download-archive.txt"
@@ -91,6 +91,10 @@ hd=0
 worst=0
 max_duration=5832
 interactive=0
+use_cookies=0
+use_cookies_from_browser=0
+use_cookies_from_file=0
+cookies_file="undefined"
 
 huge_duration=100000
 short_duration=300
@@ -103,6 +107,8 @@ while [ "$1" != "" ]; do
     [[ "$1" == --interactive ]] && interactive=1 && shift && continue
     [[ "$1" == --use-tor ]] && proxy=socks5://127.0.0.1:9050/ && shift && continue
     [[ "$1" == --proxy ]] && shift && proxy="${1:?Bad proxy specification}" && shift && continue
+    [[ "$1" == --use-cookies-from-browser ]] && use_cookies_from_browser=1 && use_cookies_from_browser=1 && shift && continue
+    [[ "$1" == --use-cookies-from-file ]] && shift && cookies_file="${1:?Bad cookies file specification}" && use_cookies_from_file=1 && shift && continue
 
     [[ "$1" == -h || "$1" == --help ]] && usage && exit
     [[ "$1" == -* ]] && usage && exit
@@ -131,6 +137,13 @@ echo "worst: $worst"
 
 echo "max_duration: $max_duration (set to 0 to disable duration check)"
 echo "interactive: $interactive"
+
+[ $(( use_cookies_from_browser + use_cookies_from_file )) -gt 1 ] && die "Ambiguous cookies specification"
+[ $(( use_cookies_from_browser + use_cookies_from_file )) -eq 1 ] && use_cookies=1
+echo "use_cookies: $use_cookies"
+echo "use_cookies_from_browser: $use_cookies_from_browser"
+echo "use_cookies_from_file: $use_cookies_from_file"
+echo "cookies_file: $cookies_file"
 
 [ -f "$batch_file" ] || die "Cannot read batch_file: $batch_file"
 echo "batch_file: $batch_file"
@@ -179,6 +192,21 @@ excluded_downloads_file="$output_dir/ytdl-excluded-list.txt"
 
 [ -f "$excluded_downloads_file" ] && rm "$excluded_downloads_file"
 
+[ $use_cookies_from_browser -eq 1 ] && \
+    {
+        ytdl_command_extract_cookies=()
+        #ytdl_command_extract_cookies+=(/usr/bin/python3)
+        ytdl_command_extract_cookies+=("$ytdl_executable")
+        ytdl_command_extract_cookies+=(--ignore-errors)
+        cookies_file="$HOME/.ytdl-cookies.txt"
+        ytdl_command_extract_cookies+=(--cookies-from-browser firefox --cookies "$cookies_file")
+        # ytdl_command_extract_cookies+=(--cookies-from-browser firefox:xxxxxxx.default-release --cookies "$cookies_file")
+
+        sleep 5
+
+        "${ytdl_command_extract_cookies[@]}" 2>/dev/null
+    }
+
 ytdl_command_base=()
 #ytdl_command_base+=(/usr/bin/python3)
 ytdl_command_base+=("$ytdl_executable")
@@ -187,6 +215,12 @@ var_is_declared proxy && \
 ytdl_command_base+=(--ignore-errors)
 ytdl_command_base+=(--cache-dir "$output_dir/.cache")
 # ytdl_command_base+=(--geo-bypass)
+[ $use_cookies -eq 1 ] && \
+    {
+        [ -e "$cookies_file" ] || die "cookies file not found"
+        ytdl_command_base+=(--cookies "$cookies_file")
+        ytdl_command_base+=(--user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0")
+    }
 ytdl_command_base+=(--no-playlist)
 # ytdl_command_base+=(--yes-playlist)
 # ytdl_command_base+=(--split-chapters)
@@ -280,6 +314,12 @@ do
         >> "$stdout_file" 2>> "$stderr_file" || \
         printf "%s\n" "$url" >> "$failed_downloads_file"
 done
+
+[ $use_cookies_from_browser -eq 1 ] && \
+    {
+        [ -e "$cookies_file" ] && rm "$cookies_file"
+        [ -e "$cookies_file" ] && info "Cannot remove cookies file"
+    }
 
 touch "$output_dir/.updated.txt" || die "Cannot touch directory update flag"
 
