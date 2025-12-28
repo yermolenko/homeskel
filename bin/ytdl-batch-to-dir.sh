@@ -2,7 +2,7 @@
 #
 #  ytdl-batch-to-dir - convenient downloading of videos
 #
-#  Copyright (C) 2014, 2017, 2021, 2022, 2023 Alexander Yermolenko
+#  Copyright (C) 2014, 2017, 2021, 2022, 2023, 2025 Alexander Yermolenko
 #  <yaa.mbox@gmail.com>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -175,7 +175,7 @@ excluded_downloads_file="$output_dir/ytdl-excluded-list.txt"
 [ -f "$excluded_downloads_file" ] && rm "$excluded_downloads_file"
 
 ytdl_command_base=()
-ytdl_command_base+=(/usr/bin/python3)
+#ytdl_command_base+=(/usr/bin/python3)
 ytdl_command_base+=("$ytdl_executable")
 var_is_declared proxy && \
     ytdl_command_base+=(--proxy "$proxy")
