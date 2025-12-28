@@ -181,6 +181,10 @@ var_is_declared proxy && \
     ytdl_command_base+=(--proxy "$proxy")
 ytdl_command_base+=(--ignore-errors)
 ytdl_command_base+=(--cache-dir "$output_dir/.cache")
+# ytdl_command_base+=(--geo-bypass)
+ytdl_command_base+=(--no-playlist)
+# ytdl_command_base+=(--yes-playlist)
+# ytdl_command_base+=(--split-chapters)
 
 for url in "${urls[@]}"
 do
