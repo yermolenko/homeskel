@@ -69,6 +69,12 @@ date=`date "+%Y%m%d-%H%M%S"`
 
 # ! touch "$scriptdir/powned.txt" > /dev/null 2>&1 || die "The script can escape the sandbox"
 
+# hostname=$( hostname )
+# if [ "x$hostname" != "xdownloader" ]
+# then
+#    die "Running youtube-dl on this host is undesired"
+# fi
+
 # minimum free disk space (in KiB)
 min_free_disk_space=1000000
 
