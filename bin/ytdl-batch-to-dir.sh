@@ -83,6 +83,8 @@ usage()
     echo "usage: $0 [[--audio-only] | [--hd] | [--worst]] [--max-duration <seconds>] [--interactive] [[--use-tor] | [--proxy <proxy>]] ytdl_batch_file [output_dir]"
 }
 
+download_archive_file="ytdl-download-archive.txt"
+
 audio_only=0
 sd=0
 hd=0
@@ -245,6 +247,8 @@ do
     ytdl_command+=(--restrict-filenames)
     ytdl_command+=(--write-description)
     ytdl_command+=(--write-info-json)
+    # touch "$download_archive_file"
+    ytdl_command+=(--download-archive "$download_archive_file")
 
     ytdl_command+=(-- "$url")
 
