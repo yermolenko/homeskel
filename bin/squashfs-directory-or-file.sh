@@ -8,3 +8,5 @@ archive_filename=${2:-./`basename "$item"`.squashfs}
 [ -e "$archive_filename" ] && { echo "ERROR: Destination already exists"; exit 1; }
 
 mksquashfs "$item" "$archive_filename" -processors 2 -comp xz
+
+sync --file-system "$archive_filename"
